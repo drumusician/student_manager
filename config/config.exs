@@ -30,6 +30,11 @@ config :phoenix,
   json_library: Jason,
   template_engines: [leex: Phoenix.LiveView.Engine]
 
+# Pow Configuration
+config :student_manager, :pow,
+  user: StudentManager.Accounts.User,
+  repo: StudentManager.Repo
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env()}.exs"

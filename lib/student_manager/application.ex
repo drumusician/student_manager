@@ -9,6 +9,7 @@ defmodule StudentManager.Application do
     # List all child processes to be supervised
     children = [
       # Start the endpoint when the application starts
+      StudentManager.Repo,
       StudentManagerWeb.Endpoint
       # Starts a worker by calling: StudentManager.Worker.start_link(arg)
       # {StudentManager.Worker, arg},

@@ -44,5 +44,7 @@ defmodule StudentManagerWeb.Endpoint do
     key: "_student_manager_key",
     signing_salt: "tV6rZ7C8"
 
+  plug Pow.Plug.Session, otp_app: :student_manager
+
   plug StudentManagerWeb.Router
 end

@@ -1,5 +1,6 @@
 defmodule StudentManagerWeb.Router do
   use StudentManagerWeb, :router
+  use Pow.Phoenix.Router
 
   pipeline :browser do
     plug :accepts, ["html"]
@@ -10,14 +11,25 @@ defmodule StudentManagerWeb.Router do
     plug :put_secure_browser_headers
   end
 
+  pipeline :protected do
+    plug Pow.Plug.RequireAuthenticated,
+      error_handler: Pow.Phoenix.PlugErrorHandler
+  end
+
   pipeline :api do
     plug :accepts, ["json"]
   end
 
-  scope "/", StudentManagerWeb do
+  scope "/" do
     pipe_through :browser
 
-    get "/", PageController, :index
+
+    get "/", StudentManagerWeb.PageController, :index
+    pow_routes()
+  end
+
+  scope "/", StudentManagerWeb do
+    pipe_through [:browser, :protected]
   end
 
   # Other scopes may use custom stacks.
