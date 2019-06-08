@@ -8,26 +8,33 @@
     <link rel="stylesheet" href="<%=Routes.static_path(@conn, "/css/app.css") %>"/>
   </head>
   <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <a class="navbar-brand" href="/">StudentManager</a>
-
-      <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
-        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-        </ul>
-        <%= if @conn.assigns.current_user do %>
-          <li><%= link(@conn.assigns.current_user.email, to: "#") %></li>
-          <li><%= link "Sign out", to: Routes.pow_session_path(@conn, :delete), method: :delete %></li>
-        <% else %>
-          <li><%= link "Sign in", to: Routes.pow_session_path(@conn, :new) %></li>
-        <% end %>
+    <nav class="navbar is-info" role="navigation" aria-label="main navigation">
+      <div class="navbar-brand">
+        <a class="navbar-item is-size-4" href="/">
+          StudentManager
+        </a>
+        <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      </div>
+      <div class="navbar-end">
+        <div class="buttons">
+          <%= if @conn.assigns.current_user do %>
+            <%= link(@conn.assigns.current_user.email, to: "#", class: "navbar-item button is-light") %>
+            <%= link "Sign out", to: Routes.pow_session_path(@conn, :delete), method: :delete, class: "navbar-item button is-primary" %>
+          <% else %>
+          <%= link "Sign in", to: Routes.pow_session_path(@conn, :new), class: "navbar-item button is-light" %>
+          <% end %>
+        </div>
       </div>
     </nav>
-    <main role="main" class="container">
-      <%=render @view_module, @view_template, assigns %>
-    </main>
+    <div class="section">
+      <main role="main" class="container">
+        <%=render @view_module, @view_template, assigns %>
+      </main>
+    </div>
     <script type="text/javascript" src="<%=Routes.static_path(@conn, "/js/app.js") %>"></script>
   </body>
 </html>

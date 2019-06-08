@@ -1,1 +1,12 @@
-<h1>Welcome to StudentManager</h1>
+<section class="hero is-light">
+  <div class="hero-body">
+    <div class="container">
+      <h1 class="title">
+        StudMan
+      </h1>
+      <h2 class="subtitle">
+        Manage your students with ease!
+      </h2>
+    </div>
+  </div>
+</section>
