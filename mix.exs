@@ -5,7 +5,7 @@ defmodule StudentManager.MixProject do
     [
       app: :student_manager,
       version: "0.1.0",
-      elixir: "~> 1.5",
+      elixir: "~> 1.8",
       elixirc_paths: elixirc_paths(Mix.env()),
       compilers: [:phoenix, :gettext] ++ Mix.compilers(),
       start_permanent: Mix.env() == :prod,
@@ -33,7 +33,7 @@ defmodule StudentManager.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-      {:phoenix, github: "phoenixframework/phoenix", branch: "v1.4", override: true},
+      {:phoenix, "~> 1.4.6"},
       {:phoenix_pubsub, "~> 1.1"},
       {:phoenix_ecto, "~> 4.0"},
       {:ecto_sql, "~> 3.0"},
