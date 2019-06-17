@@ -32,7 +32,19 @@ defmodule StudentManager.AccountsTest do
     end
 
     test "create_user/1 validates a correct role" do
-      assert {:error, %Ecto.Changeset{}} = Accounts.create_user(Map.put(@valid_attrs, :roles, ["pilot"]))
+      assert {:error, %Ecto.Changeset{}} = Accounts.create_user(Map.put(@valid_attrs, :roles, ["pilot", "teacher"]))
+    end
+
+    test "create_teacher/1 creates a user with the teacher role set" do
+      {:ok, user} = Accounts.create_teacher(@valid_attrs)
+      assert Enum.member?(user.roles, "teacher")
+      refute Enum.member?(user.roles, "student")
+    end
+
+    test "create_student/1 creates a user with the student role set" do
+      {:ok, user} = Accounts.create_student(@valid_attrs)
+      assert Enum.member?(user.roles, "student")
+      refute Enum.member?(user.roles, "teacher")
     end
   end
 end

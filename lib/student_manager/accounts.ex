@@ -56,6 +56,41 @@ defmodule StudentManager.Accounts do
   end
 
   @doc """
+  Creates a teacher.
+
+  ## Examples
+
+      iex> create_teacher(%{field: value})
+      {:ok, %User{}}
+
+      iex> create_teacher(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_teacher(attrs \\ %{}) do
+    %User{}
+    |> User.teacher_changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Creates a student.
+
+  ## Examples
+
+      iex> create_student(%{field: value})
+      {:ok, %User{}}
+
+      iex> create_student(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_student(attrs \\ %{}) do
+    %User{}
+    |> User.student_changeset(attrs)
+    |> Repo.insert()
+  end
+  @doc """
   Updates a user.
 
   ## Examples
