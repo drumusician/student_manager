@@ -1,18 +1,11 @@
 # Real World Phoenix
 ## User Roles
 
-Welcome back! In the last episode of this series we implemented user authentication.
-Now let's see how we can implement user authorization by implementing different user roles into our system.
+Welcome back! In the last episode of this series we implemented user authentication. Now let's see how we can implement user authorization by implementing different user roles into our system.
 
-We used Pow! for our authentication and that library also has a guide for implementing a user roles system.
-Let's see how far that gets us and I'd like to actually take it a bit further and implement different
-sign up flows for these different user roles.
+We used Pow! for our authentication and that library also has a guide for implementing a user roles system. Let's see how far that gets us and I'd like to actually take it a bit further and implement different sign up flows for these different user roles.
 
-But as always, we shouldn't get ahead of ourselves and make it too complicated too soon, so we'll first
-implement basic user roles. We are going to create these users in a simple manner by just adding a selection
-before the registration form that will set this field for the user. I already know I want to be able to define
-multple roles in the future so I'll take that into account when creating the field I'm going to use, but we'll
-not complicate things too much so 1 role can be selected when signing up.
+But as always, we shouldn't get ahead of ourselves and make it too complicated too soon, so we'll first implement basic user roles. We are going to create a signup flow where an anonymous visitor can simply choose to sign up as a teacher or as a student. I already know I want to be able to define multple roles in the future so I'll take that into account when creating the field I'm going to use, but we'll not complicate things too much so for now 1 role will be set on signup.
 
 ### Migration and schema
 
@@ -30,12 +23,9 @@ defmodule StudentManager.Repo.Migrations.AddRolesToUsers do
 end
 ```
 
-In this migration I'm taking advantage of the Postgres Array type to store the list of users in the db. It is
-of course also possible to store the roles in a different table and at those as an association, but for now
-this will do and we can just validate the allowed role values in the Changeset we'll use to store and update
-this user role info.
+In this migration I'm taking advantage of the Postgres Array type to store the list of users in the db. It is of course also possible to store the roles in a different table and at those as an association, but for now this will do and we can just validate the allowed role values in the Changeset we'll use to store and update this user role info.
 
-We'll also need to add this new field to our User struct to be able to use it in our application. Here I have also added the validation of the user role values. 
+We'll also need to add this new field to our User schema to be able to use it in our application. Here I have also added the validation of the user role values.
 
 ```elixir
 defmodule StudentManager.Accounts.User do
@@ -60,13 +50,8 @@ end
 
 ### Testing
 
-In the first blog post I didn't mention testing at all, but it is a very important part of building a reliable app that is easy to refactor and change with confidence.
-Without going into too much details about a proper and full-fledged test setup (I'll cover that in a separate post in the future), I would like to test this
-user role addition just to check if the above holds up and we are actually able to add these roles to a user. Now, when creating this app and setting this up in the
-first post I briefly mentioned that I was going to add the user under the accounts context. Now, we currently don't have any contexts setup, so let's take advantage
-of Phoenix generators to set it up after we've alread created the user. I have confidence that Dan has taken care of the basic testing of the basic user level
-fields and changeset, so we are mainly concerned with testing our customisations. Testing the API layer(ie. the context layer) is a very nice
-way to test actual behaviour. But can we actually run the generators when we already have part of the contet defined? Let's find out:
+In the first blog post I didn't mention testing at all, but it is a very important part of building a reliable app that is easy to refactor and change with confidence. Without going into too much details about a proper and full-fledged test setup (I'll cover that in a separate post in the future), I would like to test this user role addition just to check if the above holds up and we are actually able to add these roles to a user.
+Now, when creating this app and setting this up in the first post I briefly mentioned that I was going to add the user under the accounts context. Now, we currently don't have any contexts setup, so let's take advantage of Phoenix generators to set it up after we've alread created the user. I have confidence that Dan has taken care of the basic testing of the basic user level fields and changeset, so we are mainly concerned with testing our customisations. Testing the API layer(ie. the context layer) is a very nice way to test actual behaviour. But can we actually run the generators when we already have part of the contet defined? Let's find out:
 
 ```bash
 mix phx.gen.context Accounts User users
@@ -93,11 +78,10 @@ Remember to update your repository by running migrations:
     $ mix ecto.migrate
 ```
 
-Now that is pretty awesome actually. Once we go into `interactive overwrite` it'll ask us if we want to replace any existing files. In our case that's only the `user.ex`
-file, and we don't want to override that one! You can also see that it created a new migration, but as we already have that in place we can simply remove that file.
+Now that is pretty awesome actually. Once we go into `interactive overwrite` it'll ask us if we want to replace any existing files. In our case that's only the `user.ex` file, and we don't want to override that one! You can also see that it created a new migration, but as we already have that in place we can simply remove that file.
 
-Now this gives us a starting point to start testing our `accounts` context. We'll actually remove some of the boilerplate tests as we don't need them right now and
-keep a subset we want to test now. This is what is left of the tests:
+Now this gives us a starting point to start testing our `accounts` context. We'll actually remove some of the boilerplate tests as we don't need them right now and keep a subset we want to test now. This is what is left of the tests:
+
 ```elixir
 defmodule StudentManager.AccountsTest do
   use StudentManager.DataCase
@@ -139,20 +123,13 @@ defmodule StudentManager.AccountsTest do
 end
 ```
 
-Now, we could go ahead and add ExMachina (the Elixir equivalent of FactoryBot, if you come from Ruby...), but for now, let's not :)
-So we now have the ability to save user roles attached to a user. Great! I want to do 2 more things, so bear with me for a tad bit longer.
+Now, we could go ahead and add ExMachina (the Elixir equivalent of FactoryBot, if you come from Ruby...), but for now, let's not :) So we now have the ability to save user roles attached to a user. Great! I want to do 2 more things, so bear with me for a tad bit longer.
 
 ### Custom registration
 
-When visiting this app, it should be easy for potential students as well as teachers to sign up easily and that sign up process should be focussed on their role.
-This means a couple of things. First, we should set the role for them when they `sign up as...`, because you don't want them to be entering that themselves. Secondly, 
-the information we want to gather is very different when a student signs up compared to a teacher signing up, right? For a teacher I probably want to know what instrument(s) they
-teach, if they have existing students (and possibly import them during sign-up), if they have a location where they teach etc etc. This could become very extensive and is definitely
-not a sign-up process you want to use for students. For students it should be very simple. What is your name, email and do you have a teacher or are you looking for one
-in your neighbourhood. As an example.
+When visiting this app, it should be easy for potential students as well as teachers to sign up and that sign up process should be focussed on their role. This means a couple of things. First, we should set the role for them when they `sign up as...`, because you don't want them to be entering that themselves. Secondly, the information we want to gather is very different when a student signs up compared to a teacher signing up, right? For a teacher I probably want to know what instrument(s) they teach, if they have existing students (and possibly import them during sign-up), if they have a location where they teach etc etc. This could become very extensive and is definitely not a sign-up process you want to use for students. For students it should be very simple. What is your name, email and do you have a teacher or are you looking for one in your neighbourhood. As an example.
 
-So, without implementing all the details of thes sign-up processes. Let's at least create two ways to sign up. The main thing I want to introduce here is the way to use specific
-changesets for this purpose. This example should make very clear what I mean here:
+So, without implementing all the details of this sign-up processes. Let's at least create two ways to sign up. The main thing I want to introduce here is the way to use specific changesets for this purpose. This example should make very clear what I mean here:
 
 ```elixir
 def teacher_changeset(user_or_changeset, attrs) do
@@ -225,21 +202,13 @@ And to make that pass we'll need to create these two function in the accounts co
   end
 ```
 
-And all tests pass! I know what you're thinking. Why duplicate these functions based on only the role! But, yeah I like the explicitness for now and it could possibly diverge
-much more content-wise. So I'm gonna leave this as is. The tests are also very nice, concise and fast! Great!
+And all tests pass! I know what you're thinking. Why duplicate these functions based on only the role! But, yeah I like the explicitness for now and it could possibly diverge much more content-wise. So I'm gonna leave this as is. The tests are also very nice, concise and fast! Great!
 
 ### CanCan or can it!
 
-Ok, you're still here... great! One more thing until I leave you. The whole idea of the introduction of roles in an app like this is that you want to restrict certain users
-from doing things they are not supposed to do. So called `authorization`! So in this scenario, most people start to google or hexl for a out-of-the-box solution for this
-and they'll find a handfull of them on hex indeed. But let's take a step back, read the excellent pow guides written by Dan, think again, and realize that Plug actually is all we need
-to implement this functionality ourselves, no dependencies added! I know there is a trend in Elixir land to get library maintainers going to get more tools in our toolbox, but
-the reason sometimes that these tools are not there is simply because we just don't need these dependencies because it is so straightforward to add ourselves. The big benefit in my
-opinion being that you fully understand what the code is doing, because you have written it all yourself! A win-win I'd say!
+Ok, you're still here... great! One more thing until I leave you. The whole idea of the introduction of roles in any app is that you want to restrict certain users from doing things they are not supposed to do. So called `authorization`! So in this scenario, most people start to google or search hex.pm for an out-of-the-box solution and they'll find a handfull of them indeed. But let's take a step back, read the excellent guides that were included in the `pow` library that we have already added for authentication ([see previous post](https://www.theguild.nl/real-world-phoenix-lets-auth-some-users/)), think again, and realize that Plug actually is all we need to implement this functionality ourselves, no dependencies added! I know there is a trend in Elixir land to get library maintainers going to get more tools in our toolbox, but the reason sometimes that these tools are not there is simply because we just don't need these dependencies because it is so straightforward to add ourselves. The big benefit in my opinion being that you fully understand what the code is doing, because you have written it all yourself! A win-win I'd say!
 
-Implementing a Plug is very straightforward and if you want to read up on this, make sure to visit the Plug docs, they're awesome! For now we'll use the suggested implementation
-that Dan provides in his guide and leave it at that for now. We'll definitely expand and refine it when we discover places in our app that need some more custom control, but for now I
-think I have drained your mental power enough for the day and leave with this Plug:
+Implementing a Plug is very straightforward and if you want to read up on this, make sure to visit this [excellent tutorial on elixirschool](https://elixirschool.com/en/lessons/specifics/plug/)! For now we'll use the suggested implementation that Dan, the maintainer of `pow` provides in this [guide](https://hexdocs.pm/pow/user_roles.html#content) and leave it at that for now. We'll definitely expand and refine it when we discover places in our app that need some more custom control, but for now I think I have drained your mental power enough for the day and leave with this Plug:
 
 ```elixir
 defmodule StudentManagerWeb.Plugs.AuthorizationPlug do
@@ -286,8 +255,7 @@ defmodule StudentManagerWeb.Plugs.AuthorizationPlug do
   end
 end
 ```
-Now I believe that should be enough information for now. Next time we'll continue with these sign-up-scopes and see how
-we can utilise all of this to easily manage our sign-up process!
+Now I believe that should be enough information for now. Next time we'll continue with these sign-up-scopes and see how we can utilise all of this to easily manage our sign-up process!
 
 Thanks!
 
