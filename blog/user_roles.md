@@ -5,7 +5,7 @@ Welcome back! In the last episode of this series we implemented user authenticat
 Now let's see how we can implement user authorization by implementing different user roles into our system.
 
 We used Pow! for our authentication and that library also has a guide for implementing a user roles system.
-Let's see how far that get's us and I'd like to actually take it a bit further and implement different
+Let's see how far that gets us and I'd like to actually take it a bit further and implement different
 sign up flows for these different user roles.
 
 But as always, we shouldn't get ahead of ourselves and make it too complicated too soon, so we'll first
@@ -16,7 +16,7 @@ not complicate things too much so 1 role can be selected when signing up.
 
 ### Migration and schema
 
-We'll need to store the user roles, so we'll add a migration to store a list of users in the users table:
+We'll need to store the user roles, so we'll add a migration to store a list of roles in the users table:
 
 ```elixir
 defmodule StudentManager.Repo.Migrations.AddRolesToUsers do
@@ -60,7 +60,7 @@ end
 
 ### Testing
 
-In the first blog post I didn;t mention testing at all, but it is a very important part of building a reliable app that is easy to refactor and change with confidence.
+In the first blog post I didn't mention testing at all, but it is a very important part of building a reliable app that is easy to refactor and change with confidence.
 Without going into too much details about a proper and full-fledged test setup (I'll cover that in a separate post in the future), I would like to test this
 user role addition just to check if the above holds up and we are actually able to add these roles to a user. Now, when creating this app and setting this up in the
 first post I briefly mentioned that I was going to add the user under the accounts context. Now, we currently don't have any contexts setup, so let's take advantage
@@ -139,7 +139,7 @@ defmodule StudentManager.AccountsTest do
 end
 ```
 
-Now, we could go ahead and add ExMachina (the elixir equivalent of FactoryBot, if you come from ruby...), but for now, let's not :)
+Now, we could go ahead and add ExMachina (the Elixir equivalent of FactoryBot, if you come from Ruby...), but for now, let's not :)
 So we now have the ability to save user roles attached to a user. Great! I want to do 2 more things, so bear with me for a tad bit longer.
 
 ### Custom registration
