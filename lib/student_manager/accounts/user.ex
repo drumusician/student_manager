@@ -14,24 +14,17 @@ defmodule StudentManager.Accounts.User do
   def changeset(user_or_changeset, attrs) do
     user_or_changeset
     |> pow_changeset(attrs)
-    |> changeset_role(attrs)
   end
 
-  def teacher_changeset(user_or_changeset, attrs) do
+  def teacher_registration_changeset(user_or_changeset, attrs) do
     user_or_changeset
     |> changeset(attrs)
-    |> changeset_role(%{roles: ["teacher"]})
+    |> change(%{roles: ["teacher"]})
   end
 
-  def student_changeset(user_or_changeset, attrs) do
+  def student_registration_changeset(user_or_changeset, attrs) do
     user_or_changeset
     |> changeset(attrs)
-    |> changeset_role(%{roles: ["student"]})
-  end
-
-  def changeset_role(user_or_changeset, attrs) do
-    user_or_changeset
-    |> cast(attrs, [:roles])
-    |> validate_subset(:roles, ~w(student admin teacher parent))
+    |> change(%{roles: ["student"]})
   end
 end

@@ -22,8 +22,6 @@ defmodule StudentManagerWeb.Router do
 
   scope "/" do
     pipe_through :browser
-
-
     get "/", StudentManagerWeb.PageController, :index
     pow_routes()
   end

@@ -49,11 +49,8 @@ defmodule StudentManager.Accounts do
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_user(attrs \\ %{}) do
-    %User{}
-    |> User.changeset(attrs)
-    |> Repo.insert()
-  end
+  def create_user(%{type: "student"} = attrs), do: create_student(attrs)
+  def create_user(%{type: "teacher"} = attrs), do: create_teacher(attrs)
 
   @doc """
   Creates a teacher.
@@ -69,7 +66,7 @@ defmodule StudentManager.Accounts do
   """
   def create_teacher(attrs \\ %{}) do
     %User{}
-    |> User.teacher_changeset(attrs)
+    |> User.teacher_registration_changeset(attrs)
     |> Repo.insert()
   end
 
@@ -87,7 +84,7 @@ defmodule StudentManager.Accounts do
   """
   def create_student(attrs \\ %{}) do
     %User{}
-    |> User.student_changeset(attrs)
+    |> User.student_registration_changeset(attrs)
     |> Repo.insert()
   end
   @doc """

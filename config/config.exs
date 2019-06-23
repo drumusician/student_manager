@@ -33,7 +33,8 @@ config :phoenix,
 # Pow Configuration
 config :student_manager, :pow,
   user: StudentManager.Accounts.User,
-  repo: StudentManager.Repo
+  repo: StudentManager.Repo,
+  web_module: StudentManagerWeb
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
