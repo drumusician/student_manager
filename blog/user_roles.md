@@ -1,9 +1,10 @@
 # Real World Phoenix
-## User Roles
 
-Welcome back! In the last episode of this series we implemented user authentication. Now let's see how we can implement user authorization by implementing different user roles into our system.
+## User Roles -> the explicit way
 
-We used Pow! for our authentication and that library also has a guide for implementing a user roles system. Let's see how far that gets us and I'd like to actually take it a bit further and implement different sign up flows for these different user roles.
+Welcome back! In the [last episode](https://www.theguild.nl/real-world-phoenix-lets-auth-some-users/) of this series we implemented user authentication. Now let's see how we can implement user authorization by implementing different user roles into our system.
+
+We used [Pow!](https://github.com/danschultzer/pow) for our authentication and that library also has a guide for implementing a user roles system. Let's see how far that gets us and I'd like to actually take it a bit further and implement different sign up flows for these different user roles.
 
 But as always, we shouldn't get ahead of ourselves and make it too complicated too soon, so we'll first implement basic user roles. We are going to create a signup flow where an anonymous visitor can simply choose to sign up as a teacher or as a student. I already know I want to be able to define multple roles in the future so I'll take that into account when creating the field I'm going to use, but we'll not complicate things too much so for now 1 role will be set on signup.
 
@@ -25,7 +26,7 @@ end
 
 In this migration I'm taking advantage of the Postgres Array type to store the list of users in the db. It is of course also possible to store the roles in a different table and at those as an association, but for now this will do and we can just validate the allowed role values in the Changeset we'll use to store and update this user role info.
 
-We'll also need to add this new field to our User schema to be able to use it in our application. Here I have also added the validation of the user role values.
+We'll also need to add this new field to our User schema to be able to use it in our application. Here I have also added the validation of the user role values. The way below is a naive implementation of this concept as this is potentially a very dangerour way to add role in a changeset. I'll explain aleter in this post when we'll implement specific user role changesets.
 
 ```elixir
 defmodule StudentManager.Accounts.User do
@@ -132,20 +133,32 @@ When visiting this app, it should be easy for potential students as well as teac
 So, without implementing all the details of this sign-up processes. Let's at least create two ways to sign up. The main thing I want to introduce here is the way to use specific changesets for this purpose. This example should make very clear what I mean here:
 
 ```elixir
-def teacher_changeset(user_or_changeset, attrs) do
+def teacher_registration_changeset(user_or_changeset, attrs) do
   user_or_changeset
   |> changeset(attrs)
-  |> changeset_role(%{roles: ["teacher"]})
+  |> change(%{roles: ["teacher"]})
 end
 
-def student_changeset(user_or_changeset, attrs) do
+def student_registration_changeset(user_or_changeset, attrs) do
   user_or_changeset
   |> changeset(attrs)
-  |> changeset_role(%{roles: ["student"]})
+  |> change(%{roles: ["student"]})
 end
 ```
 
-And without involving the frontend right away, let's test and create these two api endpoints in our accounts context:
+Remember our first implementation above of adding user Roles:
+
+```elixir
+def changeset_role(user_or_changeset, attrs) do
+  user_or_changeset
+  |> Changeset.cast(attrs, [:roles])
+  |> Changeset.validate_inclusion(:roles, ~w(student teacher))
+end
+```
+
+You'll notice that instead of this changeset I am using the `change/2` method explicitly and setting the user role by user we are creating. The danger that the naive implementation introduced is that a user would potentially have the opportunity to set their own user role. And we want to control this value in our app explicitly.
+
+Now without involving the frontend right away, let's test and create these two api endpoints in our accounts context:
 
 So for the test this should do it:
 
@@ -164,6 +177,7 @@ So for the test this should do it:
 ```
 
 And to make that pass we'll need to create these two function in the accounts context:
+
 ```elixir
   @doc """
   Creates a teacher.
@@ -179,7 +193,7 @@ And to make that pass we'll need to create these two function in the accounts co
   """
   def create_teacher(attrs \\ %{}) do
     %User{}
-    |> User.teacher_changeset(attrs)
+    |> User.teacher_registration_changeset(attrs)
     |> Repo.insert()
   end
 
@@ -197,7 +211,7 @@ And to make that pass we'll need to create these two function in the accounts co
   """
   def create_student(attrs \\ %{}) do
     %User{}
-    |> User.student_changeset(attrs)
+    |> User.student_registration_changeset(attrs)
     |> Repo.insert()
   end
 ```
@@ -255,8 +269,7 @@ defmodule StudentManagerWeb.Plugs.AuthorizationPlug do
   end
 end
 ```
+
 Now I believe that should be enough information for now. Next time we'll continue with these sign-up-scopes and see how we can utilise all of this to easily manage our sign-up process!
 
 Thanks!
-
-

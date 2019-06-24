@@ -21,10 +21,12 @@
     </li>
   </ul>
 </div>
-  <%= render StudentManagerWeb.Pow.RegistrationView, "_student_fields.html", changeset: @changeset, f: f %>
-  <div class="is-hidden">
+  <% # @type == "student" => this needs a controller_callback action %>
+  <%= if true do %>
+    <%= render StudentManagerWeb.Pow.RegistrationView, "_student_fields.html", changeset: @changeset, f: f %>
+  <% else %>
     <%= render StudentManagerWeb.Pow.RegistrationView, "_teacher_fields.html", changeset: @changeset, f: f %>
-  </div>
+  <% end %>
 
   <div class="submit">
     <%= submit "Register", class: "button is-link" %>
