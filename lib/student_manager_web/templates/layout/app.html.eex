@@ -26,6 +26,7 @@
             <%= link "Sign out", to: Routes.pow_session_path(@conn, :delete), method: :delete, class: "navbar-item button is-primary" %>
           <% else %>
           <%= link "Sign in", to: Routes.pow_session_path(@conn, :new), class: "navbar-item button is-light" %>
+          <%= link "Register", to: Routes.pow_registration_path(@conn, :new), class: "navbar-item button is-light" %>
           <% end %>
         </div>
       </div>

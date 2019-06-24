@@ -1,0 +1,19 @@
+<div class="field">
+  <%= label @f, Pow.Ecto.Schema.user_id_field(@changeset), class: "label" %>
+  <div class="control">
+    <%= text_input @f, Pow.Ecto.Schema.user_id_field(@changeset), class: "input" %>
+  </div>
+  <%= error_tag @f, Pow.Ecto.Schema.user_id_field(@changeset) %>
+</div>
+
+<div class="field">
+  <%= label @f, :password, class: "label" %>
+  <%= password_input @f, :password, class: "input" %>
+  <%= error_tag @f, :password %>
+</div>
+
+<div class="field">
+  <%= label @f, :confirm_password, class: "label" %>
+  <%= password_input @f, :confirm_password, class: "input" %>
+  <%= error_tag @f, :confirm_password %>
+</div>

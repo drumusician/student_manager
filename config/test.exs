@@ -10,7 +10,7 @@ config :student_manager, StudentManagerWeb.Endpoint,
 config :logger, level: :warn
 
 # Configure your database
-config :student_manager, Studentmanager.Repo,
+config :student_manager, StudentManager.Repo,
   username: "postgres",
   password: "postgres",
   database: "student_manager_test",

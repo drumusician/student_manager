@@ -1,12 +1,50 @@
-<section class="hero is-light">
+<div class="hero box">
   <div class="hero-body">
-    <div class="container">
-      <h1 class="title">
-        StudMan
-      </h1>
-      <h2 class="subtitle">
-        Manage your students with ease!
-      </h2>
+    <h1 class="title">
+      StudMan
+    </h1>
+    <h2 class="subtitle">
+      Manage your students with ease!
+    </h2>
+    <hr />
+    <p>StudMan helps you as a teacher to manage everything related to teaching your musical instrument. From homework to invoicing your students etc...</p>
+  </div>
+</div>
+<div class="columns">
+  <div class="column">
+    <div class="card box">
+      <div class="card-header">
+        <div class="card-header-title">
+           Manage Student Data
+        </div>
+      </div>
+      <div class="card-content">
+        Keep all data related to your students in one place and easily manage this data
+      </div>
     </div>
   </div>
-</section>
+  <div class="column">
+    <div class="card box">
+      <div class="card-header">
+        <div class="card-header-title">
+           Assign Homework
+        </div>
+      </div>
+      <div class="card-content">
+        Easily assign homework to your students from within the app so they always know what they need to work on
+      </div>
+    </div>
+  </div>
+  <div class="column">
+    <div class="card box">
+      <div class="card-header">
+        <div class="card-header-title">
+           Manage Invoicing
+        </div>
+      </div>
+      <div class="card-content">
+        Easily manage payments and financial
+      </div>
+    </div>
+  </div>
+</div>

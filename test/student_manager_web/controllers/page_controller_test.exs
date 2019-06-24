@@ -3,6 +3,6 @@ defmodule StudentManagerWeb.PageControllerTest do
 
   test "GET /", %{conn: conn} do
     conn = get(conn, "/")
-    assert html_response(conn, 200) =~ "Welcome to Phoenix!"
+    assert html_response(conn, 200) =~ ~r/Manage your students with ease/
   end
 end
