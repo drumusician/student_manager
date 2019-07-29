@@ -1,3 +1,23 @@
+<%= inputs_for @f, :teacher_profile, fn fp -> %>
+  <div class="field">
+    <%= label fp, :first_name, class: "label" %>
+    <%= text_input fp, :first_name, class: "input" %>
+    <%= error_tag fp, :first_name %>
+  </div>
+
+  <div class="field">
+    <%= label fp, :last_name, class: "label" %>
+    <%= text_input fp, :last_name, class: "input" %>
+    <%= error_tag fp, :last_name %>
+  </div>
+
+  <div class="field">
+    <%= label fp, :bio, class: "label" %>
+    <%= textarea fp, :bio, class: "input" %>
+    <%= error_tag fp, :bio %>
+  </div>
+<% end %>
+
 <div class="field">
   <%= label @f, Pow.Ecto.Schema.user_id_field(@changeset), class: "label" %>
   <div class="control">
