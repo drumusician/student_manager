@@ -1,9 +1,9 @@
 defmodule StudentManager.Accounts.TeacherProfile do
   use Ecto.Schema
   import Ecto.Changeset
-  alias Accounts.User
+  alias StudentManager.Accounts.User
 
-  schema "users" do
+  schema "teacher_profiles" do
     field(:first_name, :string)
     field(:last_name, :string)
     field(:bio, :string)
@@ -12,7 +12,7 @@ defmodule StudentManager.Accounts.TeacherProfile do
     timestamps()
   end
 
-  def changeset(user_or_changeset, attrs) do
+  def changeset(user_or_changeset, attrs \\ %{}) do
     user_or_changeset
     |> cast(attrs, [:first_name, :last_name, :bio])
   end

@@ -49,44 +49,12 @@ defmodule StudentManager.Accounts do
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_user(%{type: "student"} = attrs), do: create_student(attrs)
-  def create_user(%{type: "teacher"} = attrs), do: create_teacher(attrs)
-
-  @doc """
-  Creates a teacher.
-
-  ## Examples
-
-      iex> create_teacher(%{field: value})
-      {:ok, %User{}}
-
-      iex> create_teacher(%{field: bad_value})
-      {:error, %Ecto.Changeset{}}
-
-  """
-  def create_teacher(attrs \\ %{}) do
+  def create_user(attrs) do
     %User{}
-    |> User.teacher_registration_changeset(attrs)
+    |> User.changeset(attrs)
     |> Repo.insert()
   end
 
-  @doc """
-  Creates a student.
-
-  ## Examples
-
-      iex> create_student(%{field: value})
-      {:ok, %User{}}
-
-      iex> create_student(%{field: bad_value})
-      {:error, %Ecto.Changeset{}}
-
-  """
-  def create_student(attrs \\ %{}) do
-    %User{}
-    |> User.student_registration_changeset(attrs)
-    |> Repo.insert()
-  end
   @doc """
   Updates a user.
 

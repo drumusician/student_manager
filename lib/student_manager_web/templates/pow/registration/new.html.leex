@@ -1,0 +1,84 @@
+<h1 class="title">Register</h1>
+
+<div>
+<%= f = form_for @changeset, "#", [as: :user, phx_change: :validate, phx_submit: :save] %>
+  <%= if @changeset.action do %>
+    <div class="alert alert-danger">
+      <p>Oops, something went wrong! Please check the errors below.</p>
+    </div>
+  <% end %>
+
+   <div class="tabs is-boxed">
+      <ul>
+        <li class="<%= if @type == "student", do: "is-active"%>">
+          <a>
+            <span phx-click="switch-type-student">Student Registration</span>
+          </a>
+        </li>
+        <li class="<%= if @type != "student", do: "is-active"%>">
+          <a>
+            <span phx-click="switch-type-teacher">Teacher Registration</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <%= if @type == "student" do %>
+      <%= inputs_for f, :student_profile, fn fp -> %>
+      <div class="field">
+        <%= label fp, :first_name, class: "label" %>
+        <%= text_input fp, :first_name, class: "input" %>
+        <%= error_tag fp, :first_name %>
+      </div>
+
+      <div class="field">
+        <%= label fp, :last_name, class: "label" %>
+        <%= text_input fp, :last_name, class: "input" %>
+        <%= error_tag fp, :last_name %>
+      </div>
+      <% end %>
+    <% else %>
+      <%= inputs_for f, :teacher_profile, fn fp -> %>
+      <div class="field">
+        <%= label fp, :first_name, class: "label" %>
+        <%= text_input fp, :first_name, class: "input" %>
+        <%= error_tag fp, :first_name %>
+      </div>
+
+      <div class="field">
+        <%= label fp, :last_name, class: "label" %>
+        <%= text_input fp, :last_name, class: "input" %>
+        <%= error_tag fp, :last_name %>
+      </div>
+
+      <div class="field">
+        <%= label fp, :bio, class: "label" %>
+        <%= textarea fp, :bio, class: "input" %>
+        <%= error_tag fp, :bio %>
+      </div>
+      <% end %>
+    <% end %>
+
+  <div class="field">
+    <%= label f, Pow.Ecto.Schema.user_id_field(@changeset), class: "label" %>
+    <div class="control">
+      <%= text_input f, Pow.Ecto.Schema.user_id_field(@changeset), class: "input" %>
+    </div>
+    <%= error_tag f, Pow.Ecto.Schema.user_id_field(@changeset) %>
+  </div>
+
+  <div class="field">
+    <%= label f, :password, class: "label" %>
+    <%= password_input f, :password, value: input_value(f, :password), class: "input" %>
+    <%= error_tag f, :password %>
+  </div>
+
+  <div class="field">
+    <%= label f, :confirm_password, class: "label" %>
+    <%= password_input f, :confirm_password, value: input_value(f, :confirm_password), class: "input" %>
+    <%= error_tag f, :confirm_password %>
+  </div>
+  <div>
+    <%= submit "Register", phx_disable_with: "Saving...", class: "button is-link" %>
+  </div>
+</form>
+</div>

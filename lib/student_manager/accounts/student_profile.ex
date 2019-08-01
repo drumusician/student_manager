@@ -1,9 +1,9 @@
 defmodule StudentManager.Accounts.StudentProfile do
   use Ecto.Schema
   import Ecto.Changeset
-  alias Accounts.User
+  alias StudentManager.Accounts.User
 
-  schema "users" do
+  schema "student_profiles" do
     field(:first_name, :string)
     field(:last_name, :string)
     field(:instrument, :string)

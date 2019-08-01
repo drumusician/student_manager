@@ -23,6 +23,7 @@ defmodule StudentManagerWeb.Router do
   scope "/" do
     pipe_through :browser
     get "/", StudentManagerWeb.PageController, :index
+    live "/registration/new", StudentManagerWeb.UserRegistration
     pow_routes()
   end
 
