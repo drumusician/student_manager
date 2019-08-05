@@ -18,19 +18,21 @@ defmodule StudentManager.Accounts.User do
 
   def changeset(user_or_changeset, attrs) do
     user_or_changeset
-    |> Repo.preload([:student_profile, :teacher_profile])
     |> pow_changeset(attrs)
-    |> role_changeset(attrs)
   end
 
-  defp role_changeset(user_or_changeset, %{"teacher_profile" => _} = attrs) do
+  def teacher_registration_changeset(user_or_changeset, attrs) do
     user_or_changeset
+    |> Repo.preload(:teacher_profile)
+    |> changeset(attrs)
     |> cast_assoc(:teacher_profile)
     |> change(%{roles: ["teacher"]})
   end
 
-  defp role_changeset(user_or_changeset, attrs) do
+  def student_registration_changeset(user_or_changeset, attrs) do
     user_or_changeset
+    |> Repo.preload(:student_profile)
+    |> changeset(attrs)
     |> cast_assoc(:student_profile)
     |> change(%{roles: ["student"]})
   end
