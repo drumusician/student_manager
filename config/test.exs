@@ -4,7 +4,9 @@ use Mix.Config
 # you can enable the server option below.
 config :student_manager, StudentManagerWeb.Endpoint,
   http: [port: 4002],
-  server: false
+  server: true
+
+config :student_manager, :sql_sandbox, true
 
 # Print only warnings and errors during test
 config :logger, level: :warn
@@ -16,3 +18,9 @@ config :student_manager, StudentManager.Repo,
   database: "student_manager_test",
   hostname: "localhost",
   pool: Ecto.Adapters.SQL.Sandbox
+
+config :wallaby,
+  js_errors: false,
+  screenshot_on_failure: true,
+  js_logger: :stdio,
+  driver: Wallaby.Experimental.Chrome

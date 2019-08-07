@@ -37,6 +37,7 @@ defmodule StudentManager.Accounts do
   """
   def get_user!(id), do: Repo.get!(User, id)
 
+
   @doc """
   Creates a user.
 
@@ -87,6 +88,7 @@ defmodule StudentManager.Accounts do
     |> User.student_registration_changeset(attrs)
     |> Repo.insert()
   end
+
   @doc """
   Updates a user.
 

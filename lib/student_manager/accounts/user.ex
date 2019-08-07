@@ -3,9 +3,14 @@ defmodule StudentManager.Accounts.User do
   import Ecto.Changeset
   use Pow.Ecto.Schema
 
-  schema "users" do
-    field(:roles, {:array, :string}, default: ["student"])
+  alias StudentManager.Accounts.StudentProfile
+  alias StudentManager.Accounts.TeacherProfile
+  alias StudentManager.Repo
 
+  schema "users" do
+    field :roles, {:array, :string}, default: ["student"]
+    has_one :student_profile, StudentProfile
+    has_one :teacher_profile, TeacherProfile
     pow_user_fields()
 
     timestamps()
@@ -18,13 +23,17 @@ defmodule StudentManager.Accounts.User do
 
   def teacher_registration_changeset(user_or_changeset, attrs) do
     user_or_changeset
+    |> Repo.preload(:teacher_profile)
     |> changeset(attrs)
+    |> cast_assoc(:teacher_profile)
     |> change(%{roles: ["teacher"]})
   end
 
   def student_registration_changeset(user_or_changeset, attrs) do
     user_or_changeset
+    |> Repo.preload(:student_profile)
     |> changeset(attrs)
+    |> cast_assoc(:student_profile)
     |> change(%{roles: ["student"]})
   end
 end
