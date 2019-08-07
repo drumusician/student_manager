@@ -1,14 +1,15 @@
 const path = require('path');
 const glob = require('glob');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const devMode = process.env.NODE_ENV !== 'production';
 
 module.exports = (env, options) => ({
   optimization: {
     minimizer: [
-      new UglifyJsPlugin({ cache: true, parallel: true, sourceMap: false }),
+      new TerserPlugin({ cache: true, parallel: true, sourceMap: devMode }),
       new OptimizeCSSAssetsPlugin({})
     ]
   },
@@ -19,6 +20,7 @@ module.exports = (env, options) => ({
     filename: 'app.js',
     path: path.resolve(__dirname, '../priv/static/js')
   },
+  devtool: devMode ? 'source-map' : undefined,
   module: {
     rules: [
       {

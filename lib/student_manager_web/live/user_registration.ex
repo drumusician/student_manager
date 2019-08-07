@@ -24,15 +24,15 @@ defmodule StudentManagerWeb.UserRegistration do
   def handle_event("validate", %{"user" => params}, socket) do
     changeset =
       %User{}
-      |> StudentManager.Accounts.User.changeset(params)
+      |> change_user(socket, params)
       |> Map.put(:action, :insert)
 
     {:noreply, assign(socket, changeset: changeset)}
   end
 
   def handle_event("save", %{"user" => user_params}, socket) do
-    case Accounts.create_user(user_params) do
-      {:ok, user} ->
+    case create_user(socket, user_params) do
+      {:ok, _user} ->
         {:stop,
          socket
          |> put_flash(:info, "user created")
@@ -40,6 +40,24 @@ defmodule StudentManagerWeb.UserRegistration do
 
       {:error, %Ecto.Changeset{} = changeset} ->
         {:noreply, assign(socket, changeset: changeset)}
+    end
+  end
+
+  defp create_user(socket, user_params) do
+    case socket.assigns.type do
+      "student" ->
+        Accounts.create_student(user_params)
+      "teacher" ->
+        Accounts.create_teacher(user_params)
+    end
+  end
+
+  defp change_user(user, socket, params) do
+    case socket.assigns.type do
+      "student" ->
+        User.student_registration_changeset(user, params)
+      "teacher" ->
+        User.teacher_registration_changeset(user, params)
     end
   end
 end

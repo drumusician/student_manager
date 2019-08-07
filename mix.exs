@@ -46,6 +46,7 @@ defmodule StudentManager.MixProject do
       {:phoenix_live_view, github: "phoenixframework/phoenix_live_view"},
       {:calendar, "~> 0.17.4"},
       {:pow, "~> 1.0.7"},
+      {:wallaby, github: "keathley/wallaby", runtime: false, only: :test}
     ]
   end
 

@@ -1,6 +1,10 @@
 defmodule StudentManagerWeb.Endpoint do
   use Phoenix.Endpoint, otp_app: :student_manager
 
+  if Application.get_env(:student_manager, :sql_sandbox) do
+    plug Phoenix.Ecto.SQL.Sandbox
+  end
+
   socket "/socket", StudentManagerWeb.UserSocket,
     websocket: true,
     longpoll: false
