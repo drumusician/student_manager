@@ -13,10 +13,10 @@ config :logger, level: :warn
 
 # Configure your database
 config :student_manager, StudentManager.Repo,
-  username: "postgres",
-  password: "postgres",
-  database: "student_manager_test",
-  hostname: "localhost",
+  username: System.get_env("POSTGRES_USER") || "postgres",
+  password: System.get_env("POSTGRES_PASSWORD") || "postgres",
+  database: System.get_env("POSTGRES_DB") || "student_manager_test",
+  hostname: System.get_env("POSTGRES_HOST") || "localhost",
   pool: Ecto.Adapters.SQL.Sandbox
 
 config :wallaby,
