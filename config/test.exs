@@ -13,6 +13,7 @@ config :logger, level: :warn
 
 # Configure your database
 config :student_manager, StudentManager.Repo,
+  adapter: Ecto.Adapters.Postgres,
   username: System.get_env("POSTGRES_USER") || "postgres",
   password: System.get_env("POSTGRES_PASSWORD") || "postgres",
   database: System.get_env("POSTGRES_DB") || "student_manager_test",
