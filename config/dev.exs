@@ -74,3 +74,6 @@ config :student_manager, StudentManager.Repo,
   database: "student_manager_dev",
   hostname: "localhost",
   pool_size: 10
+
+config :student_manager, StudentManager.Mailer,
+  adapter: Bamboo.LocalAdapter
