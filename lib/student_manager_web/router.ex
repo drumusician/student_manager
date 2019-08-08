@@ -1,6 +1,7 @@
 defmodule StudentManagerWeb.Router do
   use StudentManagerWeb, :router
   use Pow.Phoenix.Router
+  use Pow.Extension.Phoenix.Router, otp_app: :student_manager
 
   pipeline :browser do
     plug :accepts, ["html"]
@@ -25,6 +26,7 @@ defmodule StudentManagerWeb.Router do
     get "/", StudentManagerWeb.PageController, :index
     live "/registration/new", StudentManagerWeb.UserRegistration
     pow_routes()
+    pow_extension_routes()
   end
 
   scope "/", StudentManagerWeb do

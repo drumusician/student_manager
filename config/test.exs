@@ -25,3 +25,6 @@ config :wallaby,
   screenshot_on_failure: true,
   js_logger: :stdio,
   driver: Wallaby.Experimental.Chrome
+
+config :student_manager, StudentManager.Mailer,
+  adapter: Bamboo.TestAdapter
