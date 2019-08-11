@@ -11,7 +11,7 @@ variables:
   MIX_ENV: "test"
 
 before_script:
-  - apk update && apk install postgresql-client chromium chromedriver
+  - apk update && apk add postgresql-client chromium chromium-chromedriver
   - mix local.rebar --force
   - mix local.hex --force
   - mix deps.get
