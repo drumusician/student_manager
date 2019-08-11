@@ -9,7 +9,6 @@ defmodule StudentManagerWeb.FeatureCase do
       import Ecto
       import Ecto.Changeset
       import Ecto.Query
-      import Wallaby.Query
 
       import StudentManagerWeb.Router.Helpers
     end
@@ -24,6 +23,6 @@ defmodule StudentManagerWeb.FeatureCase do
 
     metadata = Phoenix.Ecto.SQL.Sandbox.metadata_for(StudentManager.Repo, self())
     {:ok, session} = Wallaby.start_session(metadata: metadata)
-    {:ok, session: session}
+    {:ok, wallaby_session: session}
   end
 end
