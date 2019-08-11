@@ -11,13 +11,36 @@
 # and so on) as they will fail if something goes wrong.
 alias StudentManager.Accounts.{ User, Student, Teacher }
 
-student = StudentManager.Repo.insert!(
-  %Student{
-    first_name: "Student",
-    last_name: "Drums",
-    date_of_birth: %Date{ year: 2012, month: 12, day: 12 }
-  }
-)
+students = [
+  StudentManager.Repo.insert!(
+    %Student{
+      first_name: "Student",
+      last_name: "Drums",
+      date_of_birth: %Date{ year: 2012, month: 12, day: 12 }
+    }
+  ),
+  StudentManager.Repo.insert!(
+    %Student{
+      first_name: "Bob",
+      last_name: "de Hakker",
+      date_of_birth: %Date{ year: 2000, month: 1, day: 4 }
+    }
+  ),
+  StudentManager.Repo.insert!(
+    %Student{
+      first_name: "Dennis",
+      last_name: "Chambers",
+      date_of_birth: %Date{ year: 1970, month: 7, day: 4 }
+    }
+  ),
+  StudentManager.Repo.insert!(
+    %Student{
+      first_name: "Trommel",
+      last_name: "Man",
+      date_of_birth: %Date{ year: 2000, month: 1, day: 1 }
+    }
+  )
+]
 
 StudentManager.Repo.insert!(
   %User{
@@ -29,7 +52,7 @@ StudentManager.Repo.insert!(
       first_name: "Tjaco",
       last_name: "Oostdijk",
       bio: "I am a teacher and this is my birography",
-      students: [student]
+      students: students
     }
   }
 )
