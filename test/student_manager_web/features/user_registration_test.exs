@@ -1,10 +1,10 @@
 defmodule StudentManagerWeb.UserRegistrationTest do
-  use StudentManagerWeb.FeatureCase, async: true
+  use StudentManagerWeb.FeatureCase, async: false
 
   import Wallaby.Query, only: [css: 2, button: 1, text_field: 1]
 
-  test "users can register for a student account", %{session: session} do
-    session
+  test "users can register for a student account", %{wallaby_session: wallaby_session} do
+    wallaby_session
     |> visit("/")
     |> click(css(".button", text: "Register"))
     |> fill_in(text_field("First name"), with: "Sjakie")
@@ -16,8 +16,8 @@ defmodule StudentManagerWeb.UserRegistrationTest do
     |> assert_has(css(".title", text: "StudMan"))
   end
 
-  test "users can register for a teacher account", %{session: session} do
-    session
+  test "users can register for a teacher account", %{wallaby_session: wallaby_session} do
+    wallaby_session
     |> visit("/")
     |> click(css(".button", text: "Register"))
     |> click(css("a span", text: "Teacher Registration"))
