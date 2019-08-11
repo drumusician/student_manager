@@ -3,6 +3,7 @@ defmodule StudentManagerWeb.UserRegistrationTest do
 
   import Wallaby.Query, only: [css: 2, button: 1, text_field: 1]
 
+  @tag :skip_ci
   test "users can register for a student account", %{wallaby_session: wallaby_session} do
     wallaby_session
     |> visit("/")
@@ -16,6 +17,7 @@ defmodule StudentManagerWeb.UserRegistrationTest do
     |> assert_has(css(".title", text: "StudMan"))
   end
 
+  @tag :skip_ci
   test "users can register for a teacher account", %{wallaby_session: wallaby_session} do
     wallaby_session
     |> visit("/")
