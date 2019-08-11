@@ -23,7 +23,7 @@
       </ul>
     </div>
     <%= if @type == "student" do %>
-      <%= inputs_for f, :student_profile, fn fp -> %>
+      <%= inputs_for f, :student, fn fp -> %>
       <div class="field">
         <%= label fp, :first_name, class: "label" %>
         <%= text_input fp, :first_name, class: "input" %>
@@ -37,7 +37,7 @@
       </div>
       <% end %>
     <% else %>
-      <%= inputs_for f, :teacher_profile, fn fp -> %>
+      <%= inputs_for f, :teacher, fn fp -> %>
       <div class="field">
         <%= label fp, :first_name, class: "label" %>
         <%= text_input fp, :first_name, class: "input" %>

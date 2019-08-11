@@ -5,7 +5,7 @@ defmodule StudentManager.EmailTest do
   test "welcome email" do
     user = %User{
       email: "student@example.com",
-      student_profile: %{
+      student: %{
         first_name: "Student",
         last_name: "Johnny"
       }

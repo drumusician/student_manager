@@ -1,13 +1,16 @@
-defmodule StudentManager.Accounts.TeacherProfile do
+defmodule StudentManager.Accounts.Teacher do
   use Ecto.Schema
   import Ecto.Changeset
   alias StudentManager.Accounts.User
+  alias StudentManager.Accounts.Student
+  alias StudentManager.Accounts.TeacherStudent
 
-  schema "teacher_profiles" do
+  schema "teachers" do
     field(:first_name, :string)
     field(:last_name, :string)
     field(:bio, :string)
     belongs_to :user, User
+    many_to_many :students, Student, join_through: TeacherStudent
 
     timestamps()
   end

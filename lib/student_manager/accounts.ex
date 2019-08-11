@@ -7,6 +7,7 @@ defmodule StudentManager.Accounts do
   alias StudentManager.Repo
 
   alias StudentManager.Accounts.User
+  alias StudentManager.Accounts.Teacher
 
   @doc """
   Returns the list of users.
@@ -101,6 +102,24 @@ defmodule StudentManager.Accounts do
       {:error, %Ecto.Changeset{}}
 
   """
+
+  @doc """
+  Add a student to a teacher. This is most likely a teacher adding his/her students into the system.
+
+  """
+
+  def add_student(teacher, student_params) do
+    student = Ecto.build_assoc(teacher, :students, student_params)
+    {:ok, student} = Repo.insert(student)
+
+    teacher = Repo.preload(teacher, :students)
+
+    teacher
+    |> Teacher.changeset(%{})
+    |> Ecto.Changeset.put_assoc(:students, [student | teacher.students])
+    |> Repo.update
+  end
+
   def update_user(%User{} = user, attrs) do
     user
     |> User.changeset(attrs)
