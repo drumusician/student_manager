@@ -5,14 +5,14 @@ defmodule StudentManager.Accounts.User do
   use Pow.Extension.Ecto.Schema,
     extensions: [PowResetPassword, PowEmailConfirmation]
 
-  alias StudentManager.Accounts.StudentProfile
-  alias StudentManager.Accounts.TeacherProfile
+  alias StudentManager.Accounts.Student
+  alias StudentManager.Accounts.Teacher
   alias StudentManager.Repo
 
   schema "users" do
     field :roles, {:array, :string}, default: ["student"]
-    has_one :student_profile, StudentProfile
-    has_one :teacher_profile, TeacherProfile
+    has_one :student, Student
+    has_one :teacher, Teacher
     pow_user_fields()
 
     timestamps()
@@ -26,17 +26,17 @@ defmodule StudentManager.Accounts.User do
 
   def teacher_registration_changeset(user_or_changeset, attrs) do
     user_or_changeset
-    |> Repo.preload(:teacher_profile)
+    |> Repo.preload(:teacher)
     |> changeset(attrs)
-    |> cast_assoc(:teacher_profile)
+    |> cast_assoc(:teacher)
     |> change(%{roles: ["teacher"]})
   end
 
   def student_registration_changeset(user_or_changeset, attrs) do
     user_or_changeset
-    |> Repo.preload(:student_profile)
+    |> Repo.preload(:student)
     |> changeset(attrs)
-    |> cast_assoc(:student_profile)
+    |> cast_assoc(:student)
     |> change(%{roles: ["student"]})
   end
 end
