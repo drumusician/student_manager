@@ -9,6 +9,7 @@ defmodule StudentManagerWeb.FeatureCase do
       import Ecto
       import Ecto.Changeset
       import Ecto.Query
+      import Wallaby.Query
 
       import StudentManagerWeb.Router.Helpers
     end
