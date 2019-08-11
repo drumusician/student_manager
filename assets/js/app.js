@@ -16,7 +16,16 @@ import "phoenix_html"
 // Local files can be imported directly using relative paths, for example:
 // import socket from "./socket"
 
-import LiveSocket from "phoenix_live_view"
+import LiveSocket from "phoenix_live_view";
 
-let liveSocket = new LiveSocket("/live")
-liveSocket.connect()
+let liveSocket = new LiveSocket("/live");
+liveSocket.connect();
+
+document.addEventListener('DOMContentLoaded', () => {
+  (document.querySelectorAll('.notification .delete') || []).forEach((del_button) => {
+    let notification = del_button.parentNode;
+    del_button.addEventListener('click', () => {
+      notification.parentNode.removeChild(notification);
+    });
+  });
+});
