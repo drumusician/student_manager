@@ -22,6 +22,10 @@ defmodule StudentManagerWeb.Router do
   end
 
   scope "/" do
+    if Mix.env == :dev do
+      forward "/sent_emails", Bamboo.SentEmailViewerPlug
+    end
+
     pipe_through :browser
     get "/", StudentManagerWeb.PageController, :index
     live "/registration/new", StudentManagerWeb.UserRegistration

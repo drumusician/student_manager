@@ -35,7 +35,10 @@ defmodule StudentManagerWeb.UserRegistration do
       {:ok, _user} ->
         {:stop,
          socket
-         |> put_flash(:info, "user created")
+         |> put_flash(
+           :info,
+           "Your account has been created successfully. An email has been sent to confirm your email. You'll have to follow that link before you can sign in."
+         )
          |> redirect(to: "/")}
 
       {:error, %Ecto.Changeset{} = changeset} ->

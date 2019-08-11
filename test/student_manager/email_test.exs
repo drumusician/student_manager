@@ -1,4 +1,4 @@
-defmodule Studentmanager.EmailTest do
+defmodule StudentManager.EmailTest do
   use ExUnit.Case
   alias StudentManager.Accounts.User
 

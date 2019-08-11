@@ -36,10 +36,11 @@ config :student_manager, :pow,
   repo: StudentManager.Repo,
   web_module: StudentManagerWeb,
   extensions: [PowResetPassword, PowEmailConfirmation],
-  controller_callbacks: Pow.Extension.Phoenix.ControllerCallbacks
+  controller_callbacks: Pow.Extension.Phoenix.ControllerCallbacks,
+  mailer_backend: StudentManagerWeb.PowMailer
 
 config :student_manager, StudentManager.Mailer,
-  adapter: Bamboo.SendgridAdapter,
+  adapter: Bamboo.SendGridAdapter,
   api_key: System.get_env("SENDGRID_API_KEY")
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
