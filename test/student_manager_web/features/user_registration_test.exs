@@ -1,5 +1,5 @@
 defmodule StudentManagerWeb.UserRegistrationTest do
-  use StudentManager.FeatureCase, async: true
+  use StudentManagerWeb.FeatureCase, async: true
 
   import Wallaby.Query, only: [css: 2, button: 1, text_field: 1]
 
