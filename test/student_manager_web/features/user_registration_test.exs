@@ -21,7 +21,7 @@ defmodule StudentManagerWeb.UserRegistrationTest do
     |> visit("/")
     |> click(css(".button", text: "Register"))
     |> click(css("a span", text: "Teacher Registration"))
-    |> assert_has(text_field("Bio"))
+    |> find(text_field("Bio"))
     |> fill_in(text_field("First name"), with: "Teacher")
     |> fill_in(text_field("Last name"), with: "Man")
     |> fill_in(text_field("Bio"), with: "This is my biography")
