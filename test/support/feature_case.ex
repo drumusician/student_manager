@@ -1,4 +1,4 @@
-defmodule StudentManager.FeatureCase do
+defmodule StudentManagerWeb.FeatureCase do
   use ExUnit.CaseTemplate
 
   using do
