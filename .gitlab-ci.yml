@@ -22,4 +22,4 @@ before_script:
  
 mix:
   script:
-    - mix test
+    - mix test --exclude skip_ci
