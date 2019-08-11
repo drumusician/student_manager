@@ -5,8 +5,8 @@ services:
 
 variables:
   POSTGRES_DB: "student_manager_test"
-  POSTGRES_HOST: "localhost"
-  POSTGRES_USER: "postgres"
+  POSTGRES_HOST: postgres
+  POSTGRES_USER: postgres
   POSTGRES_PASSWORD: "postgres"
   MIX_ENV: "test"
 
@@ -15,7 +15,6 @@ before_script:
   - mix local.rebar --force
   - mix local.hex --force
   - mix deps.get
-  - /etc/init.d/postgresql start
   - cd assets && npm install && cd -
   - mix ecto.create
   - mix ecto.migrate
