@@ -6,10 +6,16 @@ defmodule StudentManager.AccountsTest do
   alias StudentManager.Repo
 
   require IEx
+
   describe "users" do
     alias StudentManager.Accounts.User
 
-    @valid_attrs %{type: "student", email: "email@example.com", password: "supersecretpassword", confirm_password: "supersecretpassword"}
+    @valid_attrs %{
+      type: "student",
+      email: "email@example.com",
+      password: "supersecretpassword",
+      confirm_password: "supersecretpassword"
+    }
     @teacher_attrs %{
       type: "teacher",
       email: "email@example.com",
@@ -32,7 +38,12 @@ defmodule StudentManager.AccountsTest do
         instrument: "drums"
       }
     }
-    @invalid_attrs %{type: "student", email: "bademail@bad", password: "short", confirm_password: "shot" }
+    @invalid_attrs %{
+      type: "student",
+      email: "bademail@bad",
+      password: "short",
+      confirm_password: "shot"
+    }
 
     test "create_user/1 with valid data creates a user" do
       assert {:ok, %User{} = user} = Accounts.create_user(@valid_attrs)
@@ -63,7 +74,6 @@ defmodule StudentManager.AccountsTest do
   end
 
   describe "manage students" do
-
     @teacher_attrs %{
       type: "teacher",
       email: "email@example.com",
@@ -79,31 +89,30 @@ defmodule StudentManager.AccountsTest do
     test "is is possible to add a student associated with a teacher" do
       {:ok, user} = Accounts.create_user(@teacher_attrs)
       teacher = user.teacher
+
       student_params = %{
         first_name: "Bob",
         last_name: "De Student",
-        date_of_birth: %Date{ year: 2012, month: 12, day: 12 }
+        date_of_birth: %Date{year: 2012, month: 12, day: 12}
       }
 
       {:ok, teacher} = Accounts.add_student(teacher, student_params)
-      new_student = Repo.preload(teacher, :students).students |> List.first
+      new_student = Repo.preload(teacher, :students).students |> List.first()
       assert new_student.first_name == "Bob"
       assert new_student.last_name == "De Student"
-      assert (Student.current_teacher(new_student) |> Repo.one).id == teacher.id
+      assert (Student.current_teacher(new_student) |> Repo.one()).id == teacher.id
     end
 
-
     test "adding a student does not wipe existing students" do
-      student = StudentManager.Repo.insert!(
-        %Student{
+      student =
+        StudentManager.Repo.insert!(%Student{
           first_name: "Student",
           last_name: "Drums",
-          date_of_birth: %Date{ year: 2012, month: 12, day: 12 }
-        }
-      )
+          date_of_birth: %Date{year: 2012, month: 12, day: 12}
+        })
 
-      user = StudentManager.Repo.insert!(
-        %User{
+      user =
+        StudentManager.Repo.insert!(%User{
           email: "info@drumusician.com",
           password: "geheim1234",
           confirm_password: "geheim1234",
@@ -114,20 +123,19 @@ defmodule StudentManager.AccountsTest do
             bio: "I am a teacher and this is my birography",
             students: [student]
           }
-        }
-      )
-     
+        })
 
       teacher = user.teacher
+
       student_params = %{
         first_name: "Henk",
         last_name: "De Andere Student",
-        date_of_birth: %Date{ year: 2014, month: 10, day: 10 }
+        date_of_birth: %Date{year: 2014, month: 10, day: 10}
       }
 
       {:ok, teacher} = Accounts.add_student(teacher, student_params)
-      new_student = Repo.preload(teacher, :students).students |> List.first
-      first_student = Repo.preload(teacher, :students).students |> List.last
+      new_student = Repo.preload(teacher, :students).students |> List.first()
+      first_student = Repo.preload(teacher, :students).students |> List.last()
       assert teacher.students |> length == 2
       assert new_student.first_name == "Henk"
       assert new_student.last_name == "De Andere Student"

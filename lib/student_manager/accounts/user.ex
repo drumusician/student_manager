@@ -2,6 +2,7 @@ defmodule StudentManager.Accounts.User do
   use Ecto.Schema
   import Ecto.Changeset
   use Pow.Ecto.Schema
+
   use Pow.Extension.Ecto.Schema,
     extensions: [PowResetPassword, PowEmailConfirmation]
 
@@ -10,9 +11,9 @@ defmodule StudentManager.Accounts.User do
   alias StudentManager.Repo
 
   schema "users" do
-    field :roles, {:array, :string}, default: ["student"]
-    has_one :student, Student
-    has_one :teacher, Teacher
+    field(:roles, {:array, :string}, default: ["student"])
+    has_one(:student, Student)
+    has_one(:teacher, Teacher)
     pow_user_fields()
 
     timestamps()

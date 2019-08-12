@@ -10,9 +10,9 @@ defmodule StudentManager.Accounts.Student do
     field(:last_name, :string)
     field(:instrument, :string)
     field(:date_of_birth, :date)
-    belongs_to :user, User
+    belongs_to(:user, User)
 
-    many_to_many :teachers, Teacher, join_through: TeacherStudent
+    many_to_many(:teachers, Teacher, join_through: TeacherStudent)
 
     timestamps()
   end
@@ -23,17 +23,22 @@ defmodule StudentManager.Accounts.Student do
   end
 
   def current_teacher(student) do
-    from t in Teacher,
+    from(t in Teacher,
       join: ts in TeacherStudent,
-      where: t.id == ts.teacher_id
-        and ts.current == ^true
-        and ts.student_id == ^student.id
+      where:
+        t.id == ts.teacher_id and
+          ts.current == ^true and
+          ts.student_id == ^student.id
+    )
   end
 
   def age(student) do
-    query = from s in Student,
-      where: s.id == ^student.id,
-      select: fragment("age(?)", s.date_of_birth)
-    Repo.one(query).months / 12 |> trunc()
+    query =
+      from(s in Student,
+        where: s.id == ^student.id,
+        select: fragment("age(?)", s.date_of_birth)
+      )
+
+    (Repo.one(query).months / 12) |> trunc()
   end
 end

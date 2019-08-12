@@ -26,5 +26,4 @@ config :wallaby,
   js_logger: :stdio,
   driver: Wallaby.Experimental.Chrome
 
-config :student_manager, StudentManager.Mailer,
-  adapter: Bamboo.TestAdapter
+config :student_manager, StudentManager.Mailer, adapter: Bamboo.TestAdapter

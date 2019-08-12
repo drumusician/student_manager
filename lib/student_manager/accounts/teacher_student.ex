@@ -5,8 +5,8 @@ defmodule StudentManager.Accounts.TeacherStudent do
   alias StudentManager.Accounts.Student
 
   schema "teachers_students" do
-    belongs_to :teacher, Teacher
-    belongs_to :student, Student
+    belongs_to(:teacher, Teacher)
+    belongs_to(:student, Student)
     field(:current, :boolean, default: true)
 
     timestamps()
