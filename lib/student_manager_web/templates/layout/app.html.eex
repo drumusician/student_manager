@@ -13,6 +13,9 @@
         <a class="navbar-item is-size-4" href="/">
           StudentManager
         </a>
+        <%= if @conn.assigns.current_user && teacher?(@conn.assigns.current_user) do %>
+          <a class="navbar-item" href="/students">My Students</a>
+        <% end %>
         <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
           <span aria-hidden="true"></span>
           <span aria-hidden="true"></span>

@@ -30,7 +30,6 @@ students = [
     password: "geheim1234",
     confirm_password: "geheim1234",
     roles: ["teacher"],
-    email_confirmed_at: DateTime.now("Etc/UTC"),
     teacher: %{
       first_name: "Tjaco",
       last_name: "Oostdijk",
@@ -44,3 +43,4 @@ user = Repo.preload(user, :teacher)
 for student <- students do
   Accounts.add_student(user.teacher, student)
 end
+
