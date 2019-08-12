@@ -120,6 +120,16 @@ defmodule StudentManager.Accounts do
     |> Repo.update
   end
 
+  @doc """
+  Get my students
+  """
+
+  def get_students(current_user) do
+    user = Repo.preload(current_user, :teacher)
+    teacher = Repo.preload(user.teacher, :students)
+    teacher.students
+  end
+
   def update_user(%User{} = user, attrs) do
     user
     |> User.changeset(attrs)
