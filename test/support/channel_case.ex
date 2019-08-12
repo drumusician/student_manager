@@ -26,12 +26,12 @@ defmodule StudentManagerWeb.ChannelCase do
   end
 
   setup tags do
-
     :ok = Ecto.Adapters.SQL.Sandbox.checkout(StudentManager.Repo)
 
     unless tags[:async] do
       Ecto.Adapters.SQL.Sandbox.mode(StudentManager.Repo, {:shared, self()})
     end
+
     :ok
   end
 end

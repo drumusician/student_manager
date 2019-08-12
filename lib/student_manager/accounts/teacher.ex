@@ -9,8 +9,8 @@ defmodule StudentManager.Accounts.Teacher do
     field(:first_name, :string)
     field(:last_name, :string)
     field(:bio, :string)
-    belongs_to :user, User
-    many_to_many :students, Student, join_through: TeacherStudent
+    belongs_to(:user, User)
+    many_to_many(:students, Student, join_through: TeacherStudent)
 
     timestamps()
   end

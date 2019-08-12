@@ -38,7 +38,6 @@ defmodule StudentManager.Accounts do
   """
   def get_user!(id), do: Repo.get!(User, id)
 
-
   @doc """
   Creates a user.
 
@@ -117,7 +116,7 @@ defmodule StudentManager.Accounts do
     teacher
     |> Teacher.changeset(%{})
     |> Ecto.Changeset.put_assoc(:students, [student | teacher.students])
-    |> Repo.update
+    |> Repo.update()
   end
 
   @doc """
