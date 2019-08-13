@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+g<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8"/>
@@ -8,39 +8,69 @@
     <link rel="stylesheet" href="<%=Routes.static_path(@conn, "/css/app.css") %>"/>
   </head>
   <body>
-    <nav class="navbar is-info" role="navigation" aria-label="main navigation">
-      <div class="navbar-brand">
-        <a class="navbar-item is-size-4" href="/">
-          StudentManager
-        </a>
-        <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
-          <span aria-hidden="true"></span>
-          <span aria-hidden="true"></span>
-          <span aria-hidden="true"></span>
-        </a>
-      </div>
-      <div class="navbar-end">
-        <div class="buttons">
-          <%= if @conn.assigns.current_user do %>
-            <%= link(@conn.assigns.current_user.email, to: "#", class: "navbar-item button is-light") %>
-            <%= link "Sign out", to: Routes.pow_session_path(@conn, :delete), method: :delete, class: "navbar-item button is-primary" %>
-          <% else %>
-          <%= link "Sign in", to: Routes.pow_session_path(@conn, :new), class: "navbar-item button is-light" %>
-          <%= link "Register", to: Routes.pow_registration_path(@conn, :new), class: "navbar-item button is-light" %>
+    <!-- <div class="pageloader"></div> -->
+    <!-- <div class="infraloader is-active"></div> -->
+
+        <!-- Hero and nav -->
+    <nav class="navbar navbar-wrapper navbar-fade navbar-faded">
+      <div class="container">
+        <!-- Brand -->
+        <div class="navbar-brand">
+          <a class="navbar-item" href="/">
+            <h1 class="is-size-3">STUDMAN</h1>
+          </a>
+
+          <%= if @conn.assigns.current_user && teacher?(@conn.assigns.current_user) do %>
+          <a class="navbar-item" href="/students">My Students</a>
           <% end %>
+          <!-- Responsive toggle -->
+          <div class="custom-burger" data-target="">
+            <a id="button" class="responsive-btn" href="javascript:void(0);">
+              <span class="menu-toggle">
+                <span class="icon-box-toggle">
+                  <span class="rotate">
+                    <i class="icon-line-top"></i>
+                    <i class="icon-line-center"></i>
+                    <i class="icon-line-bottom"></i>
+                  </span>
+                </span>
+              </span>
+            </a>
+          </div>
+          <!-- /Responsive toggle -->
+        </div>
+
+        <!-- Navbar menu -->
+        <div class="navbar-menu">
+          <!-- Navbar Start -->
+          <div class="navbar-start">
+            <!-- Navbar item -->
+          </div>
+
+          <!-- Navbar end -->
+          <div class="navbar-end">
+            <!-- Signup button -->
+            <div class="navbar-item">
+            <%= if @conn.assigns.current_user do %>
+              <%= link(@conn.assigns.current_user.email, to: "#", class: "navbar-item button is-bold light-btn") %>
+              <%= link "Sign out", to: Routes.pow_session_path(@conn, :delete), method: :delete, class: "button is-bold btn-align light-btn raised" %>
+            <% else %>
+              <%= link "Sign Up Now!", to: Routes.pow_registration_path(@conn, :new), class: "button is-bold btn-align light-btn raised", id: "#signup-btn" %>
+              <%= link "Login", to: Routes.pow_session_path(@conn, :new), class: "button is-bold btn-align light-btn" %>
+            <% end %>
+            </div>
+          </div>
         </div>
       </div>
     </nav>
-    <div class="section">
-      <main role="main" class="container">
-        <%= if get_flash(@conn, :info) do %>
-          <div class="notification is-success"><button class="delete"></button><%= get_flash(@conn, :info) %></div>
-        <% end %>
-        <%= if get_flash(@conn, :error) do %>
-          <div class="notification is-danger"><button class="delete"></button><%= get_flash(@conn, :error) %></div>
-        <% end %>
-        <%=render @view_module, @view_template, assigns %>
-      </main>
+    <div>
+      <%= if get_flash(@conn, :info) do %>
+      <div class="notification is-success"><button class="delete"></button><%= get_flash(@conn, :info) %></div>
+      <% end %>
+      <%= if get_flash(@conn, :error) do %>
+      <div class="notification is-danger"><button class="delete"></button><%= get_flash(@conn, :error) %></div>
+      <% end %>
+      <%=render @view_module, @view_template, assigns %>
     </div>
     <script type="text/javascript" src="<%=Routes.static_path(@conn, "/js/app.js") %>"></script>
   </body>

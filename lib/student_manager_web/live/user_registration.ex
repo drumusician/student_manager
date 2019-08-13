@@ -3,13 +3,14 @@ defmodule StudentManagerWeb.UserRegistration do
   alias StudentManager.Accounts
   alias StudentManager.Accounts.User
 
-  def render(assigns), do: Phoenix.View.render(StudentManagerWeb.Pow.RegistrationView, "new.html", assigns)
+  def render(assigns),
+    do: Phoenix.View.render(StudentManagerWeb.Pow.RegistrationView, "new.html", assigns)
 
   def mount(_session, socket) do
     {:ok,
      assign(socket, %{
-           changeset: Accounts.User.changeset(%User{}, %{}),
-           type: "student"
+       changeset: Accounts.User.changeset(%User{}, %{}),
+       type: "student"
      })}
   end
 
@@ -50,6 +51,7 @@ defmodule StudentManagerWeb.UserRegistration do
     case socket.assigns.type do
       "student" ->
         Accounts.create_student(user_params)
+
       "teacher" ->
         Accounts.create_teacher(user_params)
     end
@@ -59,6 +61,7 @@ defmodule StudentManagerWeb.UserRegistration do
     case socket.assigns.type do
       "student" ->
         User.student_registration_changeset(user, params)
+
       "teacher" ->
         User.teacher_registration_changeset(user, params)
     end

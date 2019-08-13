@@ -1,0 +1,29 @@
+<div class="container">
+  <h1 class="title">Students</h1>
+  <table class="table is-fullwidth is-striped">
+    <thead>
+      <tr>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Instrument</th>
+        <th>Date Of Birth</th>
+        <th>Age</th>
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <%= for student <- @students do %>
+      <tr>
+        <td><%= student.first_name %></td>
+        <td><%= student.last_name %></td>
+        <td><%= student.instrument %></td>
+        <td><%= student.date_of_birth %></td>
+        <td><%= age(student) %> years old</td>
+        <td>Edit</td>
+        <td>Delete</td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
