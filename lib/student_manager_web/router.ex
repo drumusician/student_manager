@@ -36,6 +36,7 @@ defmodule StudentManagerWeb.Router do
   scope "/", StudentManagerWeb do
     pipe_through [:browser, :protected]
     resources "/students", StudentController, only: [:index]
+    resources "/dashboard", DashboardController, only: [:index]
   end
 
   # Other scopes may use custom stacks.

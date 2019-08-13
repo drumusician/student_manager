@@ -8,6 +8,10 @@
   "dependencies": {
     "bulma": "^0.7.5",
     "bulma-extensions": "^6.2.7",
+    "jquery-waypoints": "^2.0.5",
+    "jquery.counterup": "^2.1.0",
+    "scrollreveal": "^3.4.0",
+    "slick-carousel": "^1.8.1",
     "phoenix": "file:../deps/phoenix",
     "phoenix_html": "file:../deps/phoenix_html",
     "phoenix_live_view": "file:../deps/phoenix_live_view"
@@ -18,12 +22,14 @@
     "babel-loader": "^8.0.0",
     "copy-webpack-plugin": "^4.5.0",
     "css-loader": "^2.1.1",
+    "file-loader": "^4.2.0",
     "mini-css-extract-plugin": "^0.4.0",
+    "node-sass": "^4.11.0",
     "optimize-css-assets-webpack-plugin": "^5.0.1",
+    "sass-loader": "^7.1.0",
     "terser-webpack-plugin": "^1.1.0",
     "webpack": "4.4.0",
     "webpack-cli": "^3.3.2",
-    "node-sass": "^4.11.0",
-    "sass-loader": "^7.1.0"
+    "jquery": "2.2.4"
   }
 }
