@@ -28,6 +28,7 @@ defmodule StudentManagerWeb.Router do
 
     pipe_through :browser
     get "/", StudentManagerWeb.PageController, :index
+    get "/pricing", StudentManagerWeb.PageController, :pricing
     live "/registration/new", StudentManagerWeb.UserRegistration
     pow_routes()
     pow_extension_routes()
