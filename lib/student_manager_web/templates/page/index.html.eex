@@ -1,256 +1,181 @@
+<%= render(StudentManagerWeb.PageView, "_heading.html", conn: @conn) %>
+<%= render(StudentManagerWeb.PageView, "_nav.html") %>
 
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8"/>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>StudentManager · Manage your students with ease!</title>
-    <link rel="stylesheet" href="<%=Routes.static_path(@conn, "/css/app.css") %>"/>
-  </head>
-  <body>
-    <div class="pageloader"></div>
-    <div class="infraloader is-active"></div>
-
-    <!-- Hero and nav -->
-    <div class="hero is-theme-primary is-slant">
-
-      <nav class="navbar navbar-wrapper navbar-fade navbar-light is-transparent">
-        <div class="container">
-          <!-- Brand -->
-          <div class="navbar-brand">
-            <a class="navbar-item" href="/">
-              <h1 class="is-size-3">STUDMAN</h1>
-            </a>
-
-            <!-- Responsive toggle -->
-            <div class="custom-burger" data-target="">
-              <a id="" class="responsive-btn" href="javascript:void(0);">
-                <span class="menu-toggle">
-                  <span class="icon-box-toggle">
-                    <span class="rotate">
-                      <i class="icon-line-top"></i>
-                      <i class="icon-line-center"></i>
-                      <i class="icon-line-bottom"></i>
-                    </span>
-                  </span>
-                </span>
-              </a>
-            </div>
-            <!-- /Responsive toggle -->
-          </div>
-
-          <!-- Navbar menu -->
-          <div class="navbar-menu">
-            <!-- Navbar Start -->
-            <div class="navbar-start">
-              <!-- Navbar item -->
-              <a class="navbar-item is-slide" href="#product">
-                What?
-              </a>
-              <!-- Navbar item -->
-              <a class="navbar-item is-slide" href="#services">
-                How?
-              </a>
-              <!-- Navbar item -->
-              <a class="navbar-item is-slide" href="landing-v1-pricing.html">
-                Pricing
-              </a>
-              <!-- Navbar item -->
-              <a class="navbar-item is-slide" href="/session/new">
-                Login
-              </a>
-
-            </div>
-
-            <!-- Navbar end -->
-            <div class="navbar-end">
-              <!-- Signup button -->
-              <div class="navbar-item">
-                <a id="#signup-btn" href="/registration/new" class="button button-signup btn-outlined is-bold btn-align light-btn raised">
-                  Sign Up Now!
-                </a>
-              </div>
-            </div>
-          </div>
+<!-- Hero image -->
+<div id="main-hero" class="hero-body is-clean">
+  <div class="container has-text-centered">
+    <div class="columns is-vcentered">
+      <div class="column is-5 caption-column has-text-left">
+        <h1 class="clean-title light-text is-size-3">
+          Manage your students, with ease...
+        </h1>
+        <div class="subtitle is-5 no-margin">
+          Teaching is hard enough, so let's ease the pain of managing anything related to that.
         </div>
-      </nav>
-
-      <!-- Hero image -->
-      <div id="main-hero" class="hero-body is-clean">
-        <div class="container has-text-centered">
-          <div class="columns is-vcentered">
-            <div class="column is-5 caption-column has-text-left">
-              <h1 class="clean-title light-text is-size-3">
-                Manage your students, with ease...
-              </h1>
-              <div class="subtitle is-5 no-margin">
-                Teaching is hard enough, so let's ease the pain of managing anything related to that.
-              </div>
-              <div class="cta-wrapper has-text-left">
-                <a href="#product" class="button button-cta btn-align btn-outlined is-bold light-btn">
-                  Get Started
-                </a>
-              </div>
-            </div>
-            <div class="column is-9 is-offset-1">
-              <figure class="image is-3by2">
-                <img class="clean-hero-mockup mt-80 z-index-2" src="/images/illustrations/mockups/landing1/students.png" alt="">
-              </figure>
-            </div>
-
-          </div>
+        <div class="cta-wrapper has-text-left">
+          <a href="#product" class="button button-cta btn-align btn-outlined is-bold light-btn">
+            Get Started
+          </a>
         </div>
       </div>
-      <!-- /Hero image -->
+      <div class="column is-9 is-offset-1">
+        <figure class="image is-3by2">
+          <img class="clean-hero-mockup mt-80 z-index-2" src="/images/illustrations/mockups/landing1/students.png" alt="">
+        </figure>
+      </div>
+
     </div>
-    <!-- /Hero and nav -->
+  </div>
+</div>
+<!-- /Hero image -->
+</div>
+<!-- /Hero and nav -->
 
 
-    <!-- Product -->
-    <section id="product" class="section is-medium is-skewed-sm">
-      <div class="container is-reverse-skewed-sm">
-        <!-- Title -->
-        <div class="section-title-wrapper has-text-centered">
-          <div class="clean-bg-symbol"><i class="fa fa-gg"></i></div>
-          <div>
-            <h2 class="clean-section-title">Managing your students just got simpler...</h2>
-            <h3 class="subtitle is-5 pt-10 pb-10">
-              see how studman can help you managing your students easily and without stress!
-            </h3>
-          </div>
-        </div>
-
-        <div class="content-wrapper">
-          <!-- Icon boxes -->
-          <div class="columns is-vcentered">
-            <div class="column is-5 is-offset-1 has-text-centered">
-              <div class="columns is-vcentered has-text-centered is-multiline">
-                <!-- Icon box -->
-                <div class="column is-6">
-                  <div class="flex-card icon-card light-bordered hover-inset padding-20">
-                    <img src="/images/illustrations/icons/landing-v1/business-ready.svg" alt="">
-                    <div class="icon-card-text is-clean mt-10">
-                      Invoice students
-                    </div>
-                  </div>
-                </div>
-                <!-- Icon box -->
-                <div class="column is-6">
-                  <div class="flex-card icon-card light-bordered hover-inset padding-20">
-                    <img src="/images/illustrations/icons/landing-v1/wallet.svg" alt="">
-                    <div class="icon-card-text is-clean mt-10">
-                      Assign homework
-                    </div>
-                  </div>
-                </div>
-                <!-- Icon box -->
-                <div class="column is-6">
-                  <div class="flex-card icon-card light-bordered hover-inset padding-20">
-                    <img src="/images/illustrations/icons/landing-v1/dashboard.svg" alt="">
-                    <div class="icon-card-text is-clean mt-10">
-                      Manage student info
-                    </div>
-                  </div>
-                </div>
-                <!-- Icon box -->
-                <div class="column is-6">
-                  <div class="flex-card icon-card light-bordered hover-inset padding-20">
-                    <img src="/images/illustrations/icons/landing-v1/components.svg" alt="">
-                    <div class="icon-card-text is-clean mt-10">
-                      Manage your schedule
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Feature text -->
-            <div class="column is-5 is-offset-1">
-              <div class="content padding-20">
-                <h2 class="feature-headline is-clean">Features designed by a teacher that knows the issues you are faced with day to day</h2>
-                <p class="no-margin-bottom pt-5 pb-5">StudMan is developed and maintained by a drumteacher, Tjaco Oostdijk, who has many years of experience teaching and has now set a goal to make managing a teaching studio as easily as possible.</p>
-                <p class="no-margin-bottom pt-5 pb-5">He uses the app daily and refines it to suit the teachers needs. Any feature requests are very welcome!</p>
-                <div class="pt-10 pb-10">
-                  <a href="/registration/new" class="button button-cta btn-align raised primary-btn">
-                    Sign up now
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- Icon boxes -->
-        </div>
+<!-- Product -->
+<section id="product" class="section is-medium is-skewed-sm">
+  <div class="container is-reverse-skewed-sm">
+    <!-- Title -->
+    <div class="section-title-wrapper has-text-centered">
+      <div class="clean-bg-symbol"><i class="fa fa-gg"></i></div>
+      <div>
+        <h2 class="clean-section-title">Managing your students just got simpler...</h2>
+        <h3 class="subtitle is-5 pt-10 pb-10">
+          see how studman can help you managing your students easily and without stress!
+        </h3>
       </div>
-    </section>
-    <!-- /Product -->
+    </div>
 
-    <!-- Services -->
-    <section id="services" class="section section-feature-grey is-medium is-skewed-sm">
-      <div class="container is-reverse-skewed-sm">
-        <!-- Title -->
-        <div class="section-title-wrapper has-text-centered">
-          <div class="clean-bg-symbol"><i class="fa fa-gg"></i></div>
-          <div>
-            <h2 class="clean-section-title">How does studman help you teach?</h2>
-            <h3 class="subtitle is-5 pt-10 pb-10">
-              What tools do we provide to make your life easier
-            </h3>
-          </div>
-        </div>
-
-        <div class="content-wrapper">
-          <!-- Hover boxes -->
-          <div class="columns is-vcentered">
-            <div class="column"></div>
-            <div class="column is-10">
-              <div class="columns is-vcentered">
-                <div class="column is-6">
-                  <!-- Hover box -->
-                  <div class="flex-card icon-card-hover first-card light-bordered padding-20">
-                    <h3 class="card-title is-clean">
-                      Manage Student Info
-                    </h3>
-                    <p class="card-description">Manage all info related to your students and update (and let them update their info as well)</p>
-                  </div>
-                  <!-- Hover box -->
-                  <div class="flex-card icon-card-hover second-card light-bordered padding-20">
-                    <h3 class="card-title is-clean">
-                      Setup your lesson schedule
-                    </h3>
-                    <p class="card-description">Setting up a lesson schedule can be a daunting task. StudMan can help you to create a schedule that works for you and your students</p>
-                  </div>
-                </div>
-                <div class="column is-6">
-                  <!-- Hover box -->
-                  <div class="flex-card icon-card-hover third-card light-bordered padding-20">
-                    <h3 class="card-title is-clean">
-                      Automate invoicing
-                    </h3>
-                    <p class="card-description">StudMan can help you automate invoicing your students and make sure you get paid on time.</p>
-                  </div>
-                  <!-- Hover box -->
-                  <div class="flex-card icon-card-hover fourth-card light-bordered padding-20">
-                    <h3 class="card-title is-clean">
-                      Track lesson notes
-                    </h3>
-                    <p class="card-description">By assigning homework and tracking lesson notes, you'll have full insight and history of what a student is working on.</p>
-                  </div>
+    <div class="content-wrapper">
+      <!-- Icon boxes -->
+      <div class="columns is-vcentered">
+        <div class="column is-5 is-offset-1 has-text-centered">
+          <div class="columns is-vcentered has-text-centered is-multiline">
+            <!-- Icon box -->
+            <div class="column is-6">
+              <div class="flex-card icon-card light-bordered hover-inset padding-20">
+                <img src="/images/illustrations/icons/landing-v1/business-ready.svg" alt="">
+                <div class="icon-card-text is-clean mt-10">
+                  Invoice students
                 </div>
               </div>
             </div>
-            <div class="column"></div>
+            <!-- Icon box -->
+            <div class="column is-6">
+              <div class="flex-card icon-card light-bordered hover-inset padding-20">
+                <img src="/images/illustrations/icons/landing-v1/wallet.svg" alt="">
+                <div class="icon-card-text is-clean mt-10">
+                  Assign homework
+                </div>
+              </div>
+            </div>
+            <!-- Icon box -->
+            <div class="column is-6">
+              <div class="flex-card icon-card light-bordered hover-inset padding-20">
+                <img src="/images/illustrations/icons/landing-v1/dashboard.svg" alt="">
+                <div class="icon-card-text is-clean mt-10">
+                  Manage student info
+                </div>
+              </div>
+            </div>
+            <!-- Icon box -->
+            <div class="column is-6">
+              <div class="flex-card icon-card light-bordered hover-inset padding-20">
+                <img src="/images/illustrations/icons/landing-v1/components.svg" alt="">
+                <div class="icon-card-text is-clean mt-10">
+                  Manage your schedule
+                </div>
+              </div>
+            </div>
           </div>
-          <!-- /Hover boxes -->
-          <div class="has-text-centered is-title-reveal pt-40 pb-40">
-            <a href="landing-v1-signup.html" class="button button-cta btn-align raised primary-btn raised">
-              Sign up for free today
-            </a>
+        </div>
+
+        <!-- Feature text -->
+        <div class="column is-5 is-offset-1">
+          <div class="content padding-20">
+            <h2 class="feature-headline is-clean">Features designed by a teacher that knows the issues you are faced with day to day</h2>
+            <p class="no-margin-bottom pt-5 pb-5">StudMan is developed and maintained by a drumteacher, Tjaco Oostdijk, who has many years of experience teaching and has now set a goal to make managing a teaching studio as easily as possible.</p>
+            <p class="no-margin-bottom pt-5 pb-5">He uses the app daily and refines it to suit the teachers needs. Any feature requests are very welcome!</p>
+            <div class="pt-10 pb-10">
+              <a href="/registration/new" class="button button-cta btn-align raised primary-btn">
+                Sign up now
+              </a>
+            </div>
           </div>
         </div>
       </div>
-    </section>
-    <!-- /Services -->
-    <script type="text/javascript" src="<%=Routes.static_path(@conn, "/js/app.js") %>"></script>
-  </body>
+      <!-- Icon boxes -->
+    </div>
+  </div>
+</section>
+<!-- /Product -->
+
+<!-- Services -->
+<section id="services" class="section section-feature-grey is-medium is-skewed-sm">
+  <div class="container is-reverse-skewed-sm">
+    <!-- Title -->
+    <div class="section-title-wrapper has-text-centered">
+      <div class="clean-bg-symbol"><i class="fa fa-gg"></i></div>
+      <div>
+        <h2 class="clean-section-title">How does studman help you teach?</h2>
+        <h3 class="subtitle is-5 pt-10 pb-10">
+          What tools do we provide to make your life easier
+        </h3>
+      </div>
+    </div>
+
+    <div class="content-wrapper">
+      <!-- Hover boxes -->
+      <div class="columns is-vcentered">
+        <div class="column"></div>
+        <div class="column is-10">
+          <div class="columns is-vcentered">
+            <div class="column is-6">
+              <!-- Hover box -->
+              <div class="flex-card icon-card-hover first-card light-bordered padding-20">
+                <h3 class="card-title is-clean">
+                  Manage Student Info
+                </h3>
+                <p class="card-description">Manage all info related to your students and update (and let them update their info as well)</p>
+              </div>
+              <!-- Hover box -->
+              <div class="flex-card icon-card-hover second-card light-bordered padding-20">
+                <h3 class="card-title is-clean">
+                  Setup your lesson schedule
+                </h3>
+                <p class="card-description">Setting up a lesson schedule can be a daunting task. StudMan can help you to create a schedule that works for you and your students</p>
+              </div>
+            </div>
+            <div class="column is-6">
+              <!-- Hover box -->
+              <div class="flex-card icon-card-hover third-card light-bordered padding-20">
+                <h3 class="card-title is-clean">
+                  Automate invoicing
+                </h3>
+                <p class="card-description">StudMan can help you automate invoicing your students and make sure you get paid on time.</p>
+              </div>
+              <!-- Hover box -->
+              <div class="flex-card icon-card-hover fourth-card light-bordered padding-20">
+                <h3 class="card-title is-clean">
+                  Track lesson notes
+                </h3>
+                <p class="card-description">By assigning homework and tracking lesson notes, you'll have full insight and history of what a student is working on.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="column"></div>
+      </div>
+      <!-- /Hover boxes -->
+      <div class="has-text-centered is-title-reveal pt-40 pb-40">
+        <a href="/registration/new" class="button button-cta btn-align raised primary-btn raised">
+          Sign up for free today
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- /Services -->
+<script type="text/javascript" src="<%=Routes.static_path(@conn, "/js/app.js") %>"></script>
+</body>
 </html>
