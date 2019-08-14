@@ -1,23 +1,79 @@
-<h1 class="title">Sign in</h1>
-<%= form_for @changeset, @action, [as: :user], fn f -> %>
-  <%= if @changeset.action do %>
-    <div class="alert alert-danger">
-      <p>Oops, something went wrong! Please check the errors below.</p>
+<!-- Hero and nav -->
+<div class="hero is-light-grey is-fullheight">
+
+    <!-- Hero image -->
+    <div id="main-hero" class="hero-body">
+        <div class="container has-text-centered">
+            <div class="columns is-vcentered">
+                <div class="column is-6 is-offset-3">
+                    <!-- Login form -->
+                    <div id="login-card" class="animated preFadeInLeft fadeInLeft">
+                        <div class="flex-card clean-login-card">
+                            <h2>Login</h2>
+                            <%= form_for @changeset, @action, [as: :user], fn f -> %>
+                            <div class="control-material is-primary">
+                              <%= text_input f, Pow.Ecto.Schema.user_id_field(@changeset), class: "material-input" %>
+                              <span class="material-highlight"></span>
+                              <span class="bar"></span>
+                              <%= label f, Pow.Ecto.Schema.user_id_field(@changeset), class: "label" %>
+                              <%= error_tag f, Pow.Ecto.Schema.user_id_field(@changeset) %>
+                            </div>
+
+                            <div class="control-material is-primary">
+                              <%= password_input f, :password, class: "material-input" %>
+                              <span class="material-highlight"></span>
+                              <span class="bar"></span>
+                              <%= label f, :password, class: "label" %>
+                              <%= error_tag f, :password %>
+                            </div>
+
+                            <div class="field mt-20">
+                              <div class="control">
+                                <label class="checkbox-wrap is-medium">
+                                  <input id="check2" type="checkbox" class="d-checkbox">
+                                  <span></span>
+                                  Remember me
+                                </label>
+                              </div>
+                            </div>
+
+                            <div class="mt-20">
+                              <button class="button button-cta btn-align primary-btn is-fullwidth raised no-lh">Login</button>
+                            </div>
+                            <% end %>
+                            <p class="has-text-centered mt-30">
+                              <a id="show-recover" class="no-account  primary-text" href="#">Lost your password?</a>
+                            </p>
+                        </div>
+                    </div>
+                    <!-- /Login form -->
+
+                    <!-- Recover form -->
+                    <div id="recover-card" class="animated preFadeInLeft fadeInLeft is-hidden">
+                        <div class="flex-card clean-login-card">
+                            <h2>Reset Password</h2>
+                            <form>
+                                <div class="control-material is-primary">
+                                    <input class="material-input" type="text" required>
+                                    <span class="material-highlight"></span>
+                                    <span class="bar"></span>
+                                    <label>Email *</label>
+                                </div>
+
+                                <div class="mt-20">
+                                    <button class="button button-cta btn-align primary-btn is-fullwidth raised no-lh">Reset Password</button>
+                                </div>
+                            </form>
+                        </div>
+
+                        <p class="has-text-centered mt-40">
+                            <a id="show-login" class="no-account primary-text" href="#">Back to login</a>
+                        </p>
+                    </div>
+                    <!-- /Recover form -->
+                </div>
+            </div>
+        </div>
     </div>
-  <% end %>
-  <div class="field">
-    <%= label f, Pow.Ecto.Schema.user_id_field(@changeset), class: "label" %>
-    <%= text_input f, Pow.Ecto.Schema.user_id_field(@changeset), class: "input" %>
-    <%= error_tag f, Pow.Ecto.Schema.user_id_field(@changeset) %>
-  </div>
-
-  <div class="field">
-    <%= label f, :password, class: "label" %>
-    <%= password_input f, :password, class: "input" %>
-    <%= error_tag f, :password %>
-  </div>
-
-  <div class="submit">
-    <%= submit "Sign in", class: "button is-link" %>
-  </div>
-  <% end %>
+    <!-- /Hero image -->
+</div>
