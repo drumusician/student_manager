@@ -8,6 +8,7 @@ defmodule StudentManager.Accounts do
 
   alias StudentManager.Accounts.User
   alias StudentManager.Accounts.Teacher
+  alias StudentManager.Accounts.Student
 
   @doc """
   Returns the list of users.
@@ -108,8 +109,9 @@ defmodule StudentManager.Accounts do
   """
 
   def add_student(teacher, student_params) do
-    student = Ecto.build_assoc(teacher, :students, student_params)
-    {:ok, student} = Repo.insert(student)
+    {:ok, student} =
+      Student.changeset(%Student{}, student_params)
+      |> Repo.insert()
 
     teacher = Repo.preload(teacher, :students)
 

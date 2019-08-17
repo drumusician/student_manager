@@ -26,9 +26,9 @@ defmodule StudentManager.Accounts.Student do
     from(t in Teacher,
       join: ts in TeacherStudent,
       where:
-        t.id == ts.teacher_id and
-          ts.current == ^true and
-          ts.student_id == ^student.id
+      t.id == ts.teacher_id and
+      ts.current == ^true and
+      ts.student_id == ^student.id
     )
   end
 
@@ -39,6 +39,11 @@ defmodule StudentManager.Accounts.Student do
         select: fragment("age(?)", s.date_of_birth)
       )
 
-    (Repo.one(query).months / 12) |> trunc()
+    case Repo.one(query) do
+      nil ->
+        "unknown"
+      date_of_birth ->
+      (date_of_birth.months / 12) |> trunc()
+    end
   end
 end

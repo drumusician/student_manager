@@ -26,4 +26,5 @@
       <% end %>
     </tbody>
   </table>
+  <%= link "Add Student", to: Routes.student_path(@conn, :new), class: "button button-cta primary-btn raised" %>
 </div>

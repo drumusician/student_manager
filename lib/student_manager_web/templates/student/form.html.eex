@@ -1,0 +1,22 @@
+<div class="box">
+  <%= form_for @changeset, @action, fn f -> %>
+  <div class="control">
+      <%= label f, :first_name, class: "label" %>
+      <%= text_input f, :first_name, class: "input is-medium mt-5" %>
+  </div>
+  <div class="control">
+      <%= label f, :last_name, class: "label" %>
+      <%= text_input f, :last_name, class: "input is-medium mt-5" %>
+  </div>
+  <div class="control">
+      <%= label f, :instrument, class: "label" %>
+      <%= text_input f, :instrument, class: "input is-medium mt-5" %>
+  </div>
+  <div class="control">
+      <%= label f, :date_of_birth, class: "label" %>
+      <%= text_input f, :date_of_birth, class: "input is-medium mt-5" %>
+  </div>
+  <button class="button btn-align no-lh raised accent-btn">Create</button>
+  <%= link "Cancel", to: Routes.student_path(@conn, :index), class: "button raised accent-btn btn-align no-lh" %>
+  <% end %>
+</div>

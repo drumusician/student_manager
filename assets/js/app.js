@@ -9,7 +9,9 @@ import css from "../css/app.scss"
 //
 // Import dependencies
 //
-import "phoenix_html"
+import "jquery";
+import "scrollreveal";
+import "phoenix_html";
 
 // Import local files
 //
@@ -29,3 +31,5 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 });
+
+import "./components-modals"
