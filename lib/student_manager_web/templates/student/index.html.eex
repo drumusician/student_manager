@@ -20,8 +20,8 @@
         <td><%= student.instrument %></td>
         <td><%= student.date_of_birth %></td>
         <td><%= age(student) %> years old</td>
-        <td>Edit</td>
-        <td>Delete</td>
+        <td><%= link "Edit", to: Routes.student_path(@conn, :edit, student) %></td>
+        <td><%= link "Delete", to: Routes.student_path(@conn, :delete, student), method: :delete %></td>
       </tr>
       <% end %>
     </tbody>

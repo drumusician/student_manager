@@ -16,7 +16,11 @@
       <%= label f, :date_of_birth, class: "label" %>
       <%= text_input f, :date_of_birth, class: "input is-medium mt-5" %>
   </div>
-  <button class="button btn-align no-lh raised accent-btn">Create</button>
-  <%= link "Cancel", to: Routes.student_path(@conn, :index), class: "button raised accent-btn btn-align no-lh" %>
+  <div class="field">
+    <div class="control">
+      <button class="button primary-btn raised">Save</button>
+      <%= link "Cancel", to: Routes.student_path(@conn, :index), class: "button primary-btn raised" %>
+    </div>
+  </div>
   <% end %>
 </div>

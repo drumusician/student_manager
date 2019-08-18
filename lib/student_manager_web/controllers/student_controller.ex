@@ -32,4 +32,39 @@ defmodule StudentManagerWeb.StudentController do
         render(conn, "new.html", changeset: changeset)
     end
   end
+
+  def edit(conn, %{"id" => id}) do
+    {:ok, student} = Accounts.get_student(id)
+    changeset = Student.changeset(student, %{})
+
+    render(conn, "edit.html", changeset: changeset, student: student )
+  end
+
+  def update(conn, %{"id" => id, "student" => student_params}) do
+    {:ok, student} = Accounts.get_student(id)
+
+    case Accounts.update_student(student, student_params) do
+      {:ok, _student} ->
+        conn
+        |> redirect(to: Routes.student_path(conn, :index))
+
+      {:error, changeset} ->
+        render(conn, "edit.html", student: student, changeset: changeset)
+    end
+  end
+
+  def delete(conn, %{"id" => id}) do
+    {:ok, student} = Accounts.get_student(id)
+
+    case Accounts.delete_student(student) do
+      {:ok, _student} ->
+        conn
+        |> put_flash(:info, "Student deleted successfully")
+        |> redirect(to: Routes.student_path(conn, :index))
+      {:error, _reason} ->
+        conn
+        |> put_flash(:error, "Something went wrong!")
+        |> redirect(to: Routes.student_path(conn, :index))
+    end
+  end
 end

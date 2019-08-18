@@ -122,6 +122,15 @@ defmodule StudentManager.Accounts do
   end
 
   @doc """
+  Get student
+  """
+
+  def get_student(id) do
+    student = Repo.get_by(Student, id: id)
+    {:ok, student}
+  end
+ 
+  @doc """
   Get my students
   """
 
@@ -129,6 +138,25 @@ defmodule StudentManager.Accounts do
     user = Repo.preload(current_user, :teacher)
     teacher = Repo.preload(user.teacher, :students)
     teacher.students
+  end
+
+  @doc """
+  update student
+  """
+
+  def update_student(%Student{} = student, attrs) do
+    student
+    |> Student.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
+  update student
+  """
+
+  def delete_student(student) do
+    student
+    |> Repo.delete()
   end
 
   def update_user(%User{} = user, attrs) do
