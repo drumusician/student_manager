@@ -12,6 +12,7 @@ use Mix.Config
 config :student_manager, StudentManagerWeb.Endpoint,
   http: [:inet6, port: System.get_env("PORT") || 4000],
   url: [host: System.get_env("RENDER_EXTERNAL_HOSTNAME"), port: 80],
+  check_origin: ["//student-manager.onrender.com", "//drumles.drumschoolhart.nl"],
   cache_static_manifest: "priv/static/cache_manifest.json"
 
 # Do not print debug messages in production
