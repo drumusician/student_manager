@@ -1,0 +1,8 @@
+<p>Hi <%= @user.student.first_name %>,</p>
+<p>Thanks for signing up for a StudMan account!</p>
+<p>In order to use the app your teacher will need an account as well. If you added his/her name on signup, we will be contacting them to sign up.</p>
+<p>Please click this link to verify your email address. Please note that you won't be able to login if you don't.</p>
+<p><%= link "confirm email", to: StudentManagerWeb.Endpoint.url <> "/confirm-email/" <> @user.email_confirmation_token %></p>
+<p>Kind Regards,</p>
+
+<p>Tjaco Oostdijk (StudMan founder)</p>

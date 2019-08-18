@@ -2,6 +2,8 @@ defmodule StudentManagerWeb.UserRegistration do
   use Phoenix.LiveView
   alias StudentManager.Accounts
   alias StudentManager.Accounts.User
+  alias StudentManager.Email
+  alias StudentManager.Mailer
 
   def render(assigns),
     do: Phoenix.View.render(StudentManagerWeb.Pow.RegistrationView, "new.html", assigns)
@@ -33,14 +35,17 @@ defmodule StudentManagerWeb.UserRegistration do
 
   def handle_event("save", %{"user" => user_params}, socket) do
     case create_user(socket, user_params) do
-      {:ok, _user} ->
+      {:ok, user} ->
+        Email.welcome_email(user) |> Mailer.deliver_later()
+
         {:stop,
          socket
          |> put_flash(
            :info,
            "Your account has been created successfully. An email has been sent to confirm your email. You'll have to follow that link before you can sign in."
          )
-         |> redirect(to: "/")}
+         |> redirect(to: "/dashboard")}
+
 
       {:error, %Ecto.Changeset{} = changeset} ->
         {:noreply, assign(socket, changeset: changeset)}

@@ -46,7 +46,7 @@
         <div class="column">
           <div id="signup-card" class="animated preFadeInLeft fadeInLeft">
             <div class="flex-card clean-signup-card">
-              <h2 class="has-text-centered">Sign up</h2>
+              <h2 class="has-text-centered">Sign up: <%= @type %></h2>
                 <%= f = form_for @changeset, "#", [as: :user, phx_change: :validate, phx_submit: :save] %>
                     <%= if @type == "student" do %>
                     <%= inputs_for f, :student, fn fp -> %>
@@ -80,13 +80,6 @@
                       <span class="bar"></span>
                       <%= label fp, :last_name, class: "label" %>
                       <%= error_tag fp, :last_name %>
-                    </div>
-                    <div class="control-material is-primary">
-                      <%= text_input fp, :bio, class: "material-input" %>
-                      <span class="material-highlight"></span>
-                      <span class="bar"></span>
-                      <%= label fp, :bio, class: "label" %>
-                      <%= error_tag fp, :bio %>
                     </div>
                     <% end %>
                     <% end %>

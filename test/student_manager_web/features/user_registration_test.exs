@@ -6,8 +6,7 @@ defmodule StudentManagerWeb.UserRegistrationTest do
   @tag :skip_ci
   test "users can register for a student account", %{wallaby_session: wallaby_session} do
     wallaby_session
-    |> visit("/")
-    |> click(css(".button", text: "Register"))
+    |> visit("/registration/new")
     |> fill_in(text_field("First name"), with: "Sjakie")
     |> fill_in(text_field("Last name"), with: "Sjokola")
     |> fill_in(text_field("Email"), with: "example@email.com")
@@ -20,8 +19,7 @@ defmodule StudentManagerWeb.UserRegistrationTest do
   @tag :skip_ci
   test "users can register for a teacher account", %{wallaby_session: wallaby_session} do
     wallaby_session
-    |> visit("/")
-    |> click(css(".button", text: "Register"))
+    |> visit("/registration/new")
     |> click(css("a span", text: "Teacher Registration"))
     |> fill_in(text_field("First name"), with: "Teacher")
     |> fill_in(text_field("Last name"), with: "Man")
