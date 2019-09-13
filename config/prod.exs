@@ -11,7 +11,7 @@ use Mix.Config
 # before starting your production server.
 config :student_manager, StudentManagerWeb.Endpoint,
   http: [:inet6, port: System.get_env("PORT") || 4000],
-  url: [host: System.get_env("RENDER_EXTERNAL_HOSTNAME"), port: 80],
+  url: [host: "drumles.drumschoolhart.nl", port: 80],
   check_origin: ["//student-manager.onrender.com", "//drumles.drumschoolhart.nl"],
   cache_static_manifest: "priv/static/cache_manifest.json"
 
