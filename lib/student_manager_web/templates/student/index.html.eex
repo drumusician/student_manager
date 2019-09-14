@@ -15,7 +15,7 @@
     <tbody>
       <%= for student <- @students do %>
       <tr>
-        <td><%= student.first_name %></td>
+        <td><%= link student.first_name, to: Routes.student_path(@conn, :show, student) %></td>
         <td><%= student.last_name %></td>
         <td><%= student.instrument %></td>
         <td><%= student.date_of_birth %></td>

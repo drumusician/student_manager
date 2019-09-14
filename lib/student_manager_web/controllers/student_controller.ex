@@ -19,25 +19,31 @@ defmodule StudentManagerWeb.StudentController do
   end
 
   def create(conn, %{"student" => student_params}) do
-    changeset = Student.changeset(%Student{}, student_params)
-    students = Accounts.get_students(conn.assigns.current_user)
     teacher = Repo.preload(conn.assigns.current_user, :teacher).teacher
 
     case Accounts.add_student(teacher, student_params) do
-      {:ok, student } ->
+      {:ok, _student} ->
         conn
         |> put_flash(:info, "student created successfully!")
         |> redirect(to: Routes.student_path(conn, :index))
-      {:error, changeset}->
+
+      {:error, changeset} ->
         render(conn, "new.html", changeset: changeset)
     end
+  end
+
+  def show(conn, %{"id" => id}) do
+    {:ok, student} = Accounts.get_student(id)
+    {:ok, parents} = Accounts.get_parents(student)
+
+    render(conn, "show.html", student: student, parents: parents)
   end
 
   def edit(conn, %{"id" => id}) do
     {:ok, student} = Accounts.get_student(id)
     changeset = Student.changeset(student, %{})
 
-    render(conn, "edit.html", changeset: changeset, student: student )
+    render(conn, "edit.html", changeset: changeset, student: student)
   end
 
   def update(conn, %{"id" => id, "student" => student_params}) do
@@ -61,6 +67,7 @@ defmodule StudentManagerWeb.StudentController do
         conn
         |> put_flash(:info, "Student deleted successfully")
         |> redirect(to: Routes.student_path(conn, :index))
+
       {:error, _reason} ->
         conn
         |> put_flash(:error, "Something went wrong!")

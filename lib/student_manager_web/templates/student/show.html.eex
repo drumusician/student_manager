@@ -1,0 +1,36 @@
+<div class="container">
+  <div class="columns">
+    <div class="column is-12 box has-text-centered">
+      <h1 class="title is-3"><%= @student.first_name <> " " <> @student.last_name %></h1>
+    </div>
+  </div>
+  <div class="columns mt-30">
+    <div class="column is-6 box">
+      <h4 class="title is-4">Parents</h4>
+      <table class="table is-fullwidth is-striped">
+        <thead>
+          <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Phone Number</th>
+            <th></th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <%= for parent <- @parents do %>
+              <tr>
+                <td><%= parent.first_name %></td>
+                <td><%= parent.last_name %></td>
+                <td><%= parent.mobile_phone %></td>
+                <td><%= link "Edit", to: Routes.parent_path(@conn, :edit, parent) %></td>
+                <td><%= link "Delete", to: Routes.parent_path(@conn, :delete, parent), method: :delete %></td>
+              </tr>
+              <% end %>
+        </tbody>
+      </table>
+      <%= link "Add Parent", to: Routes.parent_path(@conn, :new), class: "button button-cta primary-btn raised" %>
+    </div>
+  </div>
+
+</div>
