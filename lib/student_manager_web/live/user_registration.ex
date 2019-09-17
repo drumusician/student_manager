@@ -46,7 +46,6 @@ defmodule StudentManagerWeb.UserRegistration do
          )
          |> redirect(to: "/dashboard")}
 
-
       {:error, %Ecto.Changeset{} = changeset} ->
         {:noreply, assign(socket, changeset: changeset)}
     end

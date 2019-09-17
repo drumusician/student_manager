@@ -6,6 +6,7 @@ defmodule StudentManagerWeb.PageController do
     if conn.assigns.current_user do
       redirect(conn, to: "/dashboard")
     end
+
     render(conn, "index.html")
   end
 
