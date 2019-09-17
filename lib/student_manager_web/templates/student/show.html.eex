@@ -1,0 +1,21 @@
+<div class="container">
+  <div class="columns">
+    <div class="column is-12 box has-text-centered">
+      <h1 class="title is-3"><%= @student.first_name <> " " <> @student.last_name %></h1>
+    </div>
+  </div>
+  <div class="columns mt-30">
+    <div class="column is-6 box">
+        <%= Phoenix.LiveView.live_render(
+            @conn,
+            StudentManagerWeb.Live.Parents,
+            session: %{
+                student_id: @student.id,
+                csrf_token: Phoenix.Controller.get_csrf_token()
+            }
+        )
+        %>
+    </div>
+  </div>
+
+</div>

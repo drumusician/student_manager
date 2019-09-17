@@ -2,7 +2,7 @@ defmodule StudentManager.Accounts.Student do
   use Ecto.Schema
   import Ecto.Query
   import Ecto.Changeset
-  alias StudentManager.Accounts.{User, Teacher, TeacherStudent, Student}
+  alias StudentManager.Accounts.{User, Teacher, TeacherStudent, Student, ParentStudent, Parent}
   alias StudentManager.Repo
 
   schema "students" do
@@ -12,7 +12,15 @@ defmodule StudentManager.Accounts.Student do
     field(:date_of_birth, :date)
     belongs_to(:user, User)
 
-    many_to_many(:teachers, Teacher, join_through: TeacherStudent, on_delete: :delete_all)
+    many_to_many(:teachers, Teacher,
+      join_through: TeacherStudent,
+      on_replace: :delete
+    )
+
+    many_to_many(:parents, Parent,
+      join_through: ParentStudent,
+      on_replace: :delete
+    )
 
     timestamps()
   end
@@ -25,10 +33,7 @@ defmodule StudentManager.Accounts.Student do
   def current_teacher(student) do
     from(t in Teacher,
       join: ts in TeacherStudent,
-      where:
-      t.id == ts.teacher_id and
-      ts.current == ^true and
-      ts.student_id == ^student.id
+      where: t.id == ts.teacher_id and ts.current == ^true and ts.student_id == ^student.id
     )
   end
 
@@ -42,8 +47,9 @@ defmodule StudentManager.Accounts.Student do
     case Repo.one(query) do
       nil ->
         "unknown"
+
       date_of_birth ->
-      (date_of_birth.months / 12) |> trunc()
+        (date_of_birth.months / 12) |> trunc()
     end
   end
 end

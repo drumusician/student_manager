@@ -19,7 +19,8 @@ defmodule StudentManager.Email do
 
   defp base_email() do
     new_email()
-    |> from("StudMan App<no-reply@drumusician.com>")
+    |> from("support@studman.nl")
+
     # |> put_layou({StudentManager.LayoutView, :email})
   end
 end

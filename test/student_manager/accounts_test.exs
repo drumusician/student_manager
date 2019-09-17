@@ -143,4 +143,76 @@ defmodule StudentManager.AccountsTest do
       assert first_student.last_name == "Drums"
     end
   end
+
+  describe "parents" do
+    alias StudentManager.Accounts.Parent
+
+    @valid_attrs %{first_name: "Parent", mobile_phone: "0612345678"}
+    @student_attrs %{
+      first_name: "Student",
+      intrument: "Drums"
+    }
+    @update_attrs %{first_name: "Updated Parent", mobile_phone: "0687654321"}
+    @invalid_attrs %{first_name: nil, mobile_phone: nil}
+
+    def parent_fixture(attrs \\ %{}) do
+      {:ok, parent} =
+        attrs
+        |> Enum.into(@valid_attrs)
+        |> Accounts.create_parent()
+
+      parent
+    end
+
+    def student_fixture(_attrs \\ %{}) do
+      {:ok, student} =
+        Student.changeset(%Student{}, @student_attrs)
+        |> Repo.insert()
+
+      student
+    end
+
+    test "get_parent!/1 returns the parent with given id" do
+      parent = parent_fixture()
+      assert Accounts.get_parent!(parent.id) == parent
+    end
+
+    test "create_parent/1 with valid data creates a parent" do
+      assert {:ok, %Parent{} = parent} = Accounts.create_parent(@valid_attrs)
+    end
+
+    test "create_parent/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Accounts.create_parent(@invalid_attrs)
+    end
+
+    test "add_parent/2 creates a parent related to a given student" do
+      student = student_fixture(@student_attrs)
+
+      {:ok, student} = Accounts.add_parent(student, %{@valid_attrs | first_name: "Joe"})
+
+      assert Enum.member?(Enum.map(student.parents, & &1.first_name), "Joe")
+    end
+
+    test "update_parent/2 with valid data updates the parent" do
+      parent = parent_fixture()
+      assert {:ok, %Parent{} = parent} = Accounts.update_parent(parent, @update_attrs)
+    end
+
+    test "update_parent/2 with invalid data returns error changeset" do
+      parent = parent_fixture()
+      assert {:error, %Ecto.Changeset{}} = Accounts.update_parent(parent, @invalid_attrs)
+      assert parent == Accounts.get_parent!(parent.id)
+    end
+
+    test "delete_parent/1 deletes the parent" do
+      parent = parent_fixture()
+      assert {:ok, %Parent{}} = Accounts.delete_parent(parent)
+      assert_raise Ecto.NoResultsError, fn -> Accounts.get_parent!(parent.id) end
+    end
+
+    test "change_parent/1 returns a parent changeset" do
+      parent = parent_fixture()
+      assert %Ecto.Changeset{} = Accounts.change_parent(parent)
+    end
+  end
 end

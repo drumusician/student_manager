@@ -1,0 +1,57 @@
+<h4 class="title is-4">Parents</h4>
+<table class="table is-fullwidth is-striped">
+    <thead>
+        <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Phone Number</th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <%= for parent <- @parents do %>
+            <tr>
+                <td><%= parent.first_name %></td>
+                <td><%= parent.last_name %></td>
+                <td><%= parent.mobile_phone %></td>
+                <td><span>Edit</span></td>
+                <td>
+                  <%= link to: "#" do %>
+                    <span data-confirm="Are you sure?" phx-click="delete-parent" phx-value=<%= parent.id %> >Delete</span>
+                  <% end %>
+                </td>
+            </tr>
+        <% end %>
+    </tbody>
+</table>
+<span class="button button-cta primary-btn raised" phx-click="toggle-form">Add Parent</span>
+<%= if @show_form do %>
+<hr/>
+    <%= form_for @changeset, "#", [as: :parent, phx_change: :validate, phx_submit: :save], fn f -> %>
+        <div class="control-material is-primary">
+          <%= text_input f, :first_name, class: "material-input", required: true %>
+          <span class="material-highlight"></span>
+          <span class="bar"></span>
+          <%= label f, :first_name, class: "label" %>
+          <%= error_tag f, :first_name %>
+        </div>
+        <div class="control-material is-primary">
+          <%= text_input f, :last_name, class: "material-input", required: false %>
+          <span class="material-highlight"></span>
+          <span class="bar"></span>
+          <%= label f, :last_name, class: "label" %>
+          <%= error_tag f, :last_name %>
+        </div>
+        <div class="control-material is-primary">
+          <%= text_input f, :mobile_phone, class: "material-input", required: true %>
+          <span class="material-highlight"></span>
+          <span class="bar"></span>
+          <%= label f, :mobile_phone, class: "label" %>
+          <%= error_tag f, :mobile_phone %>
+        </div>
+        <div>
+            <%= submit "Save", class: "button primary-btn raised" %>
+        </div>
+    <% end %>
+<% end %>

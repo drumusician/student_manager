@@ -4,6 +4,7 @@ defmodule StudentManagerWeb.FeatureCase do
   using do
     quote do
       use Wallaby.DSL
+      import Wallaby.Query
 
       alias StudentManager.Repo
       import Ecto
@@ -11,6 +12,14 @@ defmodule StudentManagerWeb.FeatureCase do
       import Ecto.Query
 
       import StudentManagerWeb.Router.Helpers
+
+      def login(session, login_params) do
+        session
+        |> visit("/session/new")
+        |> fill_in(text_field("Email"), with: login_params.email)
+        |> fill_in(text_field("Password"), with: login_params.password)
+        |> click(button("Login"))
+      end
     end
   end
 
@@ -23,6 +32,6 @@ defmodule StudentManagerWeb.FeatureCase do
 
     metadata = Phoenix.Ecto.SQL.Sandbox.metadata_for(StudentManager.Repo, self())
     {:ok, session} = Wallaby.start_session(metadata: metadata)
-    {:ok, wallaby_session: session}
+    {:ok, session: session}
   end
 end

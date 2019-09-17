@@ -6,14 +6,14 @@ defmodule StudentManager.Accounts.User do
   use Pow.Extension.Ecto.Schema,
     extensions: [PowResetPassword, PowEmailConfirmation]
 
-  alias StudentManager.Accounts.Student
-  alias StudentManager.Accounts.Teacher
+  alias StudentManager.Accounts.{Student, Teacher, Parent}
   alias StudentManager.Repo
 
   schema "users" do
     field(:roles, {:array, :string}, default: ["student"])
     has_one(:student, Student)
     has_one(:teacher, Teacher)
+    has_one(:parent, Parent)
     pow_user_fields()
 
     timestamps()
