@@ -4,8 +4,8 @@ defmodule StudentManagerWeb.UserRegistrationTest do
   import Wallaby.Query, only: [css: 2, button: 1, text_field: 1]
 
   @tag :skip_ci
-  test "users can register for a student account", %{wallaby_session: wallaby_session} do
-    wallaby_session
+  test "users can register for a student account", %{session: session} do
+    session
     |> visit("/registration/new")
     |> fill_in(text_field("First name"), with: "Sjakie")
     |> fill_in(text_field("Last name"), with: "Sjokola")
@@ -17,8 +17,8 @@ defmodule StudentManagerWeb.UserRegistrationTest do
   end
 
   @tag :skip_ci
-  test "users can register for a teacher account", %{wallaby_session: wallaby_session} do
-    wallaby_session
+  test "users can register for a teacher account", %{session: session} do
+    session
     |> visit("/registration/new")
     |> click(css("a span", text: "Teacher Registration"))
     |> fill_in(text_field("First name"), with: "Teacher")

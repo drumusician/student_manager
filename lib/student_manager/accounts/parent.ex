@@ -10,7 +10,7 @@ defmodule StudentManager.Accounts.Parent do
     field(:last_name, :string)
     field(:mobile_phone, :string)
     belongs_to(:user, User)
-    many_to_many(:students, Student, join_through: ParentStudent)
+    many_to_many(:students, Student, join_through: ParentStudent, on_replace: :delete)
 
     timestamps()
   end

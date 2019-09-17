@@ -150,9 +150,7 @@ defmodule StudentManager.AccountsTest do
     @valid_attrs %{first_name: "Parent", mobile_phone: "0612345678"}
     @student_attrs %{
       first_name: "Student",
-      email: "email@student.studman",
-      password: "secret1234",
-      confirm_password: "secret1234"
+      intrument: "Drums"
     }
     @update_attrs %{first_name: "Updated Parent", mobile_phone: "0687654321"}
     @invalid_attrs %{first_name: nil, mobile_phone: nil}
@@ -185,6 +183,14 @@ defmodule StudentManager.AccountsTest do
 
     test "create_parent/1 with invalid data returns error changeset" do
       assert {:error, %Ecto.Changeset{}} = Accounts.create_parent(@invalid_attrs)
+    end
+
+    test "add_parent/2 creates a parent related to a given student" do
+      student = student_fixture(@student_attrs)
+
+      {:ok, student} = Accounts.add_parent(student, %{@valid_attrs | first_name: "Joe"})
+
+      assert Enum.member?(Enum.map(student.parents, & &1.first_name), "Joe")
     end
 
     test "update_parent/2 with valid data updates the parent" do

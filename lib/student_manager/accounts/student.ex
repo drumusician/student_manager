@@ -12,8 +12,15 @@ defmodule StudentManager.Accounts.Student do
     field(:date_of_birth, :date)
     belongs_to(:user, User)
 
-    many_to_many(:teachers, Teacher, join_through: TeacherStudent, on_delete: :delete_all)
-    many_to_many(:parents, Parent, join_through: ParentStudent, on_delete: :delete_all)
+    many_to_many(:teachers, Teacher,
+      join_through: TeacherStudent,
+      on_replace: :delete
+    )
+
+    many_to_many(:parents, Parent,
+      join_through: ParentStudent,
+      on_replace: :delete
+    )
 
     timestamps()
   end

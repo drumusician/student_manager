@@ -195,6 +195,19 @@ defmodule StudentManager.Accounts do
   end
 
   @doc """
+  Returns an `%Ecto.Changeset{}` for tracking parent changes.
+
+  ## Examples
+
+  iex> change_parent(parent)
+  %Ecto.Changeset{source: %Parent{}}
+
+  """
+  def change_parent(%Parent{} = parent) do
+    Parent.changeset(parent, %{})
+  end
+
+  @doc """
   Get parents for a student.
 
   """
@@ -236,6 +249,46 @@ defmodule StudentManager.Accounts do
     %Parent{}
     |> Parent.changeset(attrs)
     |> Repo.insert()
+  end
+
+  @doc """
+  add a parent to a student
+
+  ## Examples
+
+  iex> add_parent(student, %{field: valid_value})
+  {:ok, %Student{}}
+  """
+
+  def add_parent(student, parent_params) do
+    {:ok, parent} =
+      Parent.changeset(%Parent{}, parent_params)
+      |> Repo.insert()
+
+    student = Repo.preload(student, :parents)
+
+    student
+    |> Student.changeset(%{})
+    |> Ecto.Changeset.put_assoc(:parents, [parent | student.parents])
+    |> Repo.update()
+  end
+
+  @doc """
+  remove a parent from a student
+
+  ## Examples
+
+  iex> remove_parent(student, parent)
+  {:ok, %Student{}}
+  """
+
+  def remove_parent(student, parent) do
+    student = Repo.preload(student, :parents)
+
+    student
+    |> Student.changeset(%{})
+    |> Ecto.Changeset.put_assoc(:parents, Enum.reject(student.parents, &(&1.id == parent.id)))
+    |> Repo.update()
   end
 
   @doc """

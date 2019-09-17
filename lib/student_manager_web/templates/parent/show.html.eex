@@ -1,8 +1,0 @@
-<h1>Show Parent</h1>
-
-<ul>
-
-</ul>
-
-<span><%= link "Edit", to: Routes.parent_path(@conn, :edit, @parent) %></span>
-<span><%= link "Back", to: Routes.parent_path(@conn, :index) %></span>
