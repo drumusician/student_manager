@@ -1,0 +1,50 @@
+version: '3.1'
+
+services:
+
+  db:
+    image: postgres
+    deploy:
+      restart_policy:
+        condition: on-failure
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: student_manager_prod
+    networks:
+      - traefik-public
+
+  web:
+    image: student-manager-app
+    deploy:
+      restart_policy:
+        condition: on-failure
+      labels:
+        - traefik.frontend.rule=Host:${DOMAIN?Variable DOMAIN not set}
+        - traefik.enable=true
+        - traefik.port=9000
+        - traefik.tags=traefik-public
+        - traefik.docker.network=traefik-public
+        # Traefik service that listens to HTTP
+        - traefik.redirectorservice.frontend.entryPoints=http
+        - traefik.redirectorservice.frontend.redirect.entryPoint=https
+        # Traefik service that listens to HTTPS
+        - traefik.webservice.frontend.entryPoints=https
+    ports:
+      - ${PORT}:${PORT}
+    environment:
+      PORT: ${PORT}
+      HOSTNAME: ${HOSTNAME}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_HOST: ${DB_HOST}
+      SECRET_KEY_BASE: ${SECRET_KEY_BASE}
+      SENDGRID_API_KEY: ${SENDGRID_API_KEY}
+    depends_on:
+      - db
+    networks:
+      - traefik-public
+
+networks:
+  traefik-public:
+    external: true

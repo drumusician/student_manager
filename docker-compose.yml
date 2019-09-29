@@ -1,0 +1,23 @@
+version: '3.4'
+services:
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: student_manager_prod
+  app:
+    build:
+      context: .
+    ports:
+      - "4000:4000"
+    environment:
+      PORT: 4000
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_HOST: db
+      SECRET_KEY_BASE: ${SECRET_KEY_BASE}
+      SENDGRID_API_KEY: ${SENDGRID_API_KEY}
+    depends_on:
+      - db
