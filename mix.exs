@@ -43,8 +43,8 @@ defmodule StudentManager.MixProject do
       {:gettext, "~> 0.11"},
       {:jason, "~> 1.0"},
       {:plug_cowboy, "~> 2.0"},
-      {:phoenix_live_view, github: "phoenixframework/phoenix_live_view"},
-      {:calendar, "~> 0.17.4"},
+      {:phoenix_live_view, "~> 0.3.1"},
+      {:calendar, "~> 1.0.0"},
       {:pow, "~> 1.0.7"},
       {:wallaby, github: "keathley/wallaby", runtime: false, only: :test},
       {:bamboo, "~> 1.3"}

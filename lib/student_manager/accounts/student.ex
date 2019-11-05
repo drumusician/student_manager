@@ -2,7 +2,17 @@ defmodule StudentManager.Accounts.Student do
   use Ecto.Schema
   import Ecto.Query
   import Ecto.Changeset
-  alias StudentManager.Accounts.{User, Teacher, TeacherStudent, Student, ParentStudent, Parent}
+
+  alias StudentManager.Accounts.{
+    User,
+    Teacher,
+    TeacherStudent,
+    Student,
+    ParentStudent,
+    Parent,
+    Contract
+  }
+
   alias StudentManager.Repo
 
   schema "students" do
@@ -21,6 +31,9 @@ defmodule StudentManager.Accounts.Student do
       join_through: ParentStudent,
       on_replace: :delete
     )
+
+    has_many(:contracts, Contract)
+    has_many(:lesson_schedule_entries, LessonScheduleEntry)
 
     timestamps()
   end

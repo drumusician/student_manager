@@ -1,9 +1,7 @@
 defmodule StudentManager.Accounts.Teacher do
   use Ecto.Schema
   import Ecto.Changeset
-  alias StudentManager.Accounts.User
-  alias StudentManager.Accounts.Student
-  alias StudentManager.Accounts.TeacherStudent
+  alias StudentManager.Accounts.{User, Student, TeacherStudent, Contract, LessonSchedule}
 
   schema "teachers" do
     field(:first_name, :string)
@@ -11,6 +9,8 @@ defmodule StudentManager.Accounts.Teacher do
     field(:bio, :string)
     belongs_to(:user, User)
     many_to_many(:students, Student, join_through: TeacherStudent)
+    has_many(:contracts, Contract)
+    has_many(:lesson_scheduls, LessonSchedule)
 
     timestamps()
   end
