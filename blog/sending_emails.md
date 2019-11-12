@@ -77,5 +77,53 @@ config :student_manager, Studentmanager.Mailer,
 Ok, so this is all very straightforward stuff. Just following the guides from `Bamboo` should get you setup. We can now add sending of the welcome email in the signup process we created in the last blogpost. Remember from last post that we used LiveView for our registration form? Because of this is makes it really easy to add our email in the signup flow like this:
 
 ```elixir
+  def handle_event("save", %{"user" => user_params}, socket) do
+    case create_user(socket, user_params) do
+      {:ok, user} ->
+        Email.welcome_email(user) |> Mailer.deliver_later()
+        
+        {:stop,
+         socket
+         |> put_flash(:info, "user created")
+         |> redirect(to: "/")}
 
+      {:error, %Ecto.Changeset{} = changeset} ->
+        {:noreply, assign(socket, changeset: changeset)}
+    end
+  end
 ```
+
+The fact that I'm using LiveView here makes it a little easier to hook into the registration process. If we were using the regular sign-up process of Pow we would need to a little more work to get this email delivered. Luckily the author of Pow also has us covered. He provides callback hooks you can use to hook into the sign-up process in certain spots. In our case, the after_create hook for the regostration_controller is the hook we want to grab.
+
+Lets's create a file for our controller_callbacks: `student_manager_web/pow/callbacks_controller.ex` with the following contents:
+
+```elixir
+defmodule StudentManagerWeb.Pow.CallbacksController do
+  @moduledoc false
+
+  use Pow.Extension.Phoenix.ControllerCallbacks.Base
+
+  def before_respond(Pow.Phoenix.RegistrationController, :create, {:ok, user, conn}, _config) do
+    user
+    |> StudentManager.Email.welcome_email()
+    |> StudentManager.Mailer.deliver_later()
+
+    {:ok, user, conn}
+  end
+end
+```
+
+Now to be able to trigger these callbacks, we'll need to add this in our pow config in `config/config.exs`
+
+```elixir
+# Pow Configuration
+config :student_manager, :pow,
+  user: StudentManager.Accounts.User,
+  repo: StudentManager.Repo,
+  web_module: StudentManagerWeb,
+  controller_callbacks: StudentManagerWeb.Pow.ControllerCallbacks
+```
+
+That should do it for sending out a welcoming email on signup. Hope this was helpful!
+
+Until next time!
